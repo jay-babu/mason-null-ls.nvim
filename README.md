@@ -1,0 +1,1 @@
+# mason-null-ls.nvim

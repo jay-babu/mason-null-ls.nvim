@@ -36,11 +36,17 @@ local function k(tab)
 end
 
 local setup = function(settings)
+	print('diagnostics')
 	print(k(require('null-ls.builtins').diagnostics))
+	print('formatting')
 	print(k(require('null-ls.builtins').formatting))
+	print('code_actions')
 	print(k(require('null-ls.builtins').code_actions))
+	print('completion')
 	print(k(require('null-ls.builtins').completion))
+	print('hover')
 	print(k(require('null-ls.builtins').hover))
+	print('done')
 	SETTINGS = vim.tbl_deep_extend('force', SETTINGS, settings)
 	vim.validate({
 		ensure_installed = { SETTINGS.ensure_installed, 'table', true },

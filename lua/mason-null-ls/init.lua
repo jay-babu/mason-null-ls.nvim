@@ -168,6 +168,7 @@ end
 
 local run_on_start = function()
 	if SETTINGS.run_on_start then
+		print('I AM RUNNINNG')
 		vim.defer_fn(check_install, SETTINGS.start_delay or 0)
 	end
 end

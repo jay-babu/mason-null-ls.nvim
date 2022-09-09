@@ -29,8 +29,15 @@ local function kDump(tab)
 	local keyset = {}
 
 	for k, _ in pairs(tab) do
-		print(k)
 		keyset[k] = true
+	end
+	return keyset
+end
+
+local function tableToKeys(tab)
+	local keyset = {}
+	for k, _ in pairs(tab) do
+		table.insert(keyset, k)
 	end
 	return keyset
 end
@@ -72,7 +79,7 @@ local setup = function(settings)
 	t = merge(t, kDump(require('null-ls.builtins').hover))
 	print('done')
 	print(dump(t))
-	print(dump(lookup(t)))
+	print(dump(tableToKeys(lookup(t))))
 	SETTINGS = vim.tbl_deep_extend('force', SETTINGS, settings)
 	vim.validate({
 		ensure_installed = { SETTINGS.ensure_installed, 'table', true },

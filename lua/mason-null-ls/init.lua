@@ -3,26 +3,25 @@ local mr = require('mason-registry')
 local SETTINGS = {
 	ensure_installed = {},
 	auto_update = false,
-	run_on_start = true,
 	start_delay = 0,
 }
 
-local function dump(o)
-	if type(o) == 'table' then
-		local s = '{ '
-		for k, v in pairs(o) do
-			if type(k) ~= 'number' then
-				k = '"' .. k .. '"'
-			end
-			s = s .. '[' .. k .. '] = ' .. dump(v) .. ','
-		end
-		return s .. '} '
-	else
-		return tostring(o)
-	end
-end
-
-local function kDump(tab)
+-- local function dump(o)
+-- 	if type(o) == 'table' then
+-- 		local s = '{ '
+-- 		for k, v in pairs(o) do
+-- 			if type(k) ~= 'number' then
+-- 				k = '"' .. k .. '"'
+-- 			end
+-- 			s = s .. '[' .. k .. '] = ' .. dump(v) .. ','
+-- 		end
+-- 		return s .. '} '
+-- 	else
+-- 		return tostring(o)
+-- 	end
+-- end
+--
+local function getKeys(tab)
 	if tab == nil then
 		return nil
 	end
@@ -42,16 +41,16 @@ local function tableToKeys(tab)
 	return keyset
 end
 
-local function merge(t1, t2)
-	for k, v in pairs(t2) do
-		if (type(v) == 'table') and (type(t1[k] or false) == 'table') then
-			merge(t1[k], t2[k])
-		else
-			t1[k] = v
-		end
-	end
-	return t1
-end
+-- local function merge(t1, t2)
+-- 	for k, v in pairs(t2) do
+-- 		if (type(v) == 'table') and (type(t1[k] or false) == 'table') then
+-- 			merge(t1[k], t2[k])
+-- 		else
+-- 			t1[k] = v
+-- 		end
+-- 	end
+-- 	return t1
+-- end
 
 local function lookup(t)
 	local tools = {}
@@ -66,28 +65,19 @@ local function lookup(t)
 end
 
 local setup = function(settings)
-	print('diagnostics')
 	local t = {}
-	t = merge(t, kDump(require('null-ls.builtins').diagnostics))
-	print('formatting')
-	t = merge(t, kDump(require('null-ls.builtins').formatting))
-	print('code_actions')
-	t = merge(t, kDump(require('null-ls.builtins').code_actions))
-	print('completion')
-	t = merge(t, kDump(require('null-ls.builtins').completion))
-	print('hover')
-	t = merge(t, kDump(require('null-ls.builtins').hover))
-	print('done')
-	-- print(dump(t))
+	t = vim.tbl_deep_extend('force', t, getKeys(require('null-ls.builtins').diagnostics))
+	t = vim.tbl_deep_extend('force', t, getKeys(require('null-ls.builtins').formatting))
+	t = vim.tbl_deep_extend('force', t, getKeys(require('null-ls.builtins').code_actions))
+	t = vim.tbl_deep_extend('force', t, getKeys(require('null-ls.builtins').completion))
+	t = vim.tbl_deep_extend('force', t, getKeys(require('null-ls.builtins').hover))
 	local tools = tableToKeys(lookup(t))
-	-- print(dump(tools))
+	print(tools)
 	SETTINGS = vim.tbl_deep_extend('force', SETTINGS, settings)
 	SETTINGS.ensure_installed = tools
-	print(dump(SETTINGS))
 	vim.validate({
 		ensure_installed = { SETTINGS.ensure_installed, 'table', true },
 		auto_update = { SETTINGS.auto_update, 'boolean', true },
-		run_on_start = { SETTINGS.run_on_start, 'boolean', true },
 		start_delay = { SETTINGS.start_delay, 'number', true },
 	})
 end
@@ -166,15 +156,7 @@ local check_install = function(force_update)
 	end
 end
 
-local run_on_start = function()
-	if SETTINGS.run_on_start then
-		print('I AM RUNNINNG')
-		vim.defer_fn(check_install, SETTINGS.start_delay or 0)
-	end
-end
-
 return {
-	run_on_start = run_on_start,
 	check_install = check_install,
 	setup = setup,
 }

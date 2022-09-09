@@ -46,6 +46,18 @@ local function merge(t1, t2)
 	return t1
 end
 
+local function lookup(t)
+	local tools = {}
+	local mappings = require('mason-null-ls.mappings')
+	for source, _ in pairs(t) do
+		local wantedTools = mappings[source] or {}
+		for tool, _ in pairs(wantedTools) do
+			tools[tool] = true
+		end
+	end
+	return tools
+end
+
 local setup = function(settings)
 	print('diagnostics')
 	local t = {}
@@ -60,6 +72,7 @@ local setup = function(settings)
 	t = merge(t, kDump(require('null-ls.builtins').hover))
 	print('done')
 	print(dump(t))
+	print(dump(lookup(t)))
 	SETTINGS = vim.tbl_deep_extend('force', SETTINGS, settings)
 	vim.validate({
 		ensure_installed = { SETTINGS.ensure_installed, 'table', true },

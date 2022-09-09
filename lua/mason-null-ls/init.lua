@@ -22,7 +22,7 @@ local function dump(o)
 	end
 end
 
-local function k(tab)
+local function kDump(tab)
 	if tab == nil then
 		return nil
 	end
@@ -30,23 +30,36 @@ local function k(tab)
 
 	for k, _ in pairs(tab) do
 		print(k)
-		table.insert(keyset, k)
+		keyset[k] = true
 	end
 	return dump(keyset)
 end
 
+local function merge(t1, t2)
+	for k, v in pairs(t2) do
+		if (type(v) == 'table') and (type(t1[k] or false) == 'table') then
+			merge(t1[k], t2[k])
+		else
+			t1[k] = v
+		end
+	end
+	return t1
+end
+
 local setup = function(settings)
 	print('diagnostics')
-	print(k(require('null-ls.builtins').diagnostics))
+	local t = {}
+	t = merge(t, require('null-ls.builtins').diagnostics)
 	print('formatting')
-	print(k(require('null-ls.builtins').formatting))
+	t = merge(t, require('null-ls.builtins').formatting)
 	print('code_actions')
-	print(k(require('null-ls.builtins').code_actions))
+	t = merge(t, require('null-ls.builtins').code_actions)
 	print('completion')
-	print(k(require('null-ls.builtins').completion))
+	t = merge(t, require('null-ls.builtins').completion)
 	print('hover')
-	print(k(require('null-ls.builtins').hover))
+	t = merge(t, require('null-ls.builtins').hover)
 	print('done')
+	print(dump(t))
 	SETTINGS = vim.tbl_deep_extend('force', SETTINGS, settings)
 	vim.validate({
 		ensure_installed = { SETTINGS.ensure_installed, 'table', true },

@@ -7,7 +7,37 @@ local SETTINGS = {
 	start_delay = 0,
 }
 
+local function dump(o)
+	if type(o) == 'table' then
+		local s = '{ '
+		for k, v in pairs(o) do
+			if type(k) ~= 'number' then
+				k = '"' .. k .. '"'
+			end
+			s = s .. '[' .. k .. '] = ' .. dump(v) .. ','
+		end
+		return s .. '} '
+	else
+		return tostring(o)
+	end
+end
+
+local function k(tab)
+	local keyset = {}
+
+	for k, _ in pairs(tab) do
+		print(k)
+		table.insert(keyset, k)
+	end
+	return dump(keyset)
+end
+
 local setup = function(settings)
+	print(k(require('null-ls.builtins').diagnostics))
+	print(k(require('null-ls.builtins').formatting))
+	print(k(require('null-ls.builtins').code_actions))
+	print(k(require('null-ls.builtins').completion))
+	print(k(require('null-ls.builtins').hover))
 	SETTINGS = vim.tbl_deep_extend('force', SETTINGS, settings)
 	vim.validate({
 		ensure_installed = { SETTINGS.ensure_installed, 'table', true },

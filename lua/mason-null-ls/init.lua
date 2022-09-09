@@ -32,7 +32,7 @@ local function kDump(tab)
 		print(k)
 		keyset[k] = true
 	end
-	return dump(keyset)
+	return keyset
 end
 
 local function merge(t1, t2)
@@ -49,15 +49,15 @@ end
 local setup = function(settings)
 	print('diagnostics')
 	local t = {}
-	t = merge(t, require('null-ls.builtins').diagnostics)
+	t = merge(t, kDump(require('null-ls.builtins').diagnostics))
 	print('formatting')
-	t = merge(t, require('null-ls.builtins').formatting)
+	t = merge(t, kDump(require('null-ls.builtins').formatting))
 	print('code_actions')
-	t = merge(t, require('null-ls.builtins').code_actions)
+	t = merge(t, kDump(require('null-ls.builtins').code_actions))
 	print('completion')
-	t = merge(t, require('null-ls.builtins').completion)
+	t = merge(t, kDump(require('null-ls.builtins').completion))
 	print('hover')
-	t = merge(t, require('null-ls.builtins').hover)
+	t = merge(t, kDump(require('null-ls.builtins').hover))
 	print('done')
 	print(dump(t))
 	SETTINGS = vim.tbl_deep_extend('force', SETTINGS, settings)

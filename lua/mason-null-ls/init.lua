@@ -23,6 +23,9 @@ local function dump(o)
 end
 
 local function k(tab)
+	if tab == nil then
+		return nil
+	end
 	local keyset = {}
 
 	for k, _ in pairs(tab) do

@@ -3,8 +3,7 @@ local mr = require('mason-registry')
 local SETTINGS = {
 	ensure_installed = {},
 	auto_update = false,
-	run_on_start = true,
-	start_delay = 0,
+	automatic_installation = false,
 }
 
 local function dump(o)
@@ -22,28 +21,55 @@ local function dump(o)
 	end
 end
 
-local function k(tab)
+local function getKeysAsSet(tab)
+	if tab == nil then
+		return nil
+	end
 	local keyset = {}
 
 	for k, _ in pairs(tab) do
-		print(k)
-		table.insert(keyset, k)
+		keyset[k] = true
 	end
-	return dump(keyset)
+	return keyset
+end
+
+-- local function tableToKeys(tab)
+-- 	local keyset = {}
+-- 	for k, _ in pairs(tab) do
+-- 		table.insert(keyset, k)
+-- 	end
+-- 	return keyset
+-- end
+
+-- local function merge(t1, t2)
+-- 	for k, v in pairs(t2) do
+-- 		if (type(v) == 'table') and (type(t1[k] or false) == 'table') then
+-- 			merge(t1[k], t2[k])
+-- 		else
+-- 			t1[k] = v
+-- 		end
+-- 	end
+-- 	return t1
+-- end
+
+local function lookup(t)
+	local tools = {}
+	local mappings = require('mason-null-ls.mappings')
+	for source, _ in pairs(t) do
+		local wantedTools = mappings[source] or {}
+		for _, tool in pairs(wantedTools) do
+			tools[tool] = true
+		end
+	end
+	return tools
 end
 
 local setup = function(settings)
-	print(k(require('null-ls.builtins').diagnostics))
-	print(k(require('null-ls.builtins').formatting))
-	print(k(require('null-ls.builtins').code_actions))
-	print(k(require('null-ls.builtins').completion))
-	print(k(require('null-ls.builtins').hover))
 	SETTINGS = vim.tbl_deep_extend('force', SETTINGS, settings)
 	vim.validate({
 		ensure_installed = { SETTINGS.ensure_installed, 'table', true },
 		auto_update = { SETTINGS.auto_update, 'boolean', true },
-		run_on_start = { SETTINGS.run_on_start, 'boolean', true },
-		start_delay = { SETTINGS.start_delay, 'number', true },
+		automatic_installation = { SETTINGS.automatic_installation, 'boolean', true },
 	})
 end
 
@@ -53,6 +79,18 @@ end
 
 local show_error = function(msg)
 	vim.schedule_wrap(vim.api.nvim_err_writeln(string.format('[mason-null-ls] %s', msg)))
+end
+
+local auto_get_packages = function()
+	local sources = {}
+	sources = vim.tbl_deep_extend('force', sources, getKeysAsSet(require('null-ls.builtins').diagnostics))
+	sources = vim.tbl_deep_extend('force', sources, getKeysAsSet(require('null-ls.builtins').formatting))
+	sources = vim.tbl_deep_extend('force', sources, getKeysAsSet(require('null-ls.builtins').code_actions))
+	sources = vim.tbl_deep_extend('force', sources, getKeysAsSet(require('null-ls.builtins').completion))
+	sources = vim.tbl_deep_extend('force', sources, getKeysAsSet(require('null-ls.builtins').hover))
+	local tools = vim.tbl_keys(lookup(sources))
+	print(dump(tools))
+	return tools
 end
 
 local do_install = function(p, version, on_close)
@@ -71,6 +109,9 @@ local do_install = function(p, version, on_close)
 end
 
 local check_install = function(force_update)
+	if SETTINGS.automatic_installation then
+		SETTINGS.ensure_installed = vim.tbl_deep_extend('force', auto_get_packages(), SETTINGS.ensure_installed)
+	end
 	local completed = 0
 	local total = vim.tbl_count(SETTINGS.ensure_installed)
 	local on_close = function()
@@ -121,14 +162,7 @@ local check_install = function(force_update)
 	end
 end
 
-local run_on_start = function()
-	if SETTINGS.run_on_start then
-		vim.defer_fn(check_install, SETTINGS.start_delay or 0)
-	end
-end
-
 return {
-	run_on_start = run_on_start,
 	check_install = check_install,
 	setup = setup,
 }

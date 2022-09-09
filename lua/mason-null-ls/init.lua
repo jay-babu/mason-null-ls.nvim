@@ -6,21 +6,21 @@ local SETTINGS = {
 	start_delay = 0,
 }
 
--- local function dump(o)
--- 	if type(o) == 'table' then
--- 		local s = '{ '
--- 		for k, v in pairs(o) do
--- 			if type(k) ~= 'number' then
--- 				k = '"' .. k .. '"'
--- 			end
--- 			s = s .. '[' .. k .. '] = ' .. dump(v) .. ','
--- 		end
--- 		return s .. '} '
--- 	else
--- 		return tostring(o)
--- 	end
--- end
---
+local function dump(o)
+	if type(o) == 'table' then
+		local s = '{ '
+		for k, v in pairs(o) do
+			if type(k) ~= 'number' then
+				k = '"' .. k .. '"'
+			end
+			s = s .. '[' .. k .. '] = ' .. dump(v) .. ','
+		end
+		return s .. '} '
+	else
+		return tostring(o)
+	end
+end
+
 local function getKeys(tab)
 	if tab == nil then
 		return nil
@@ -72,7 +72,7 @@ local setup = function(settings)
 	t = vim.tbl_deep_extend('force', t, getKeys(require('null-ls.builtins').completion))
 	t = vim.tbl_deep_extend('force', t, getKeys(require('null-ls.builtins').hover))
 	local tools = tableToKeys(lookup(t))
-	print(tools)
+	print(dump(tools))
 	SETTINGS = vim.tbl_deep_extend('force', SETTINGS, settings)
 	SETTINGS.ensure_installed = tools
 	vim.validate({

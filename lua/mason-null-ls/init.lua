@@ -82,13 +82,13 @@ local show_error = function(msg)
 end
 
 local auto_get_packages = function()
-	local t = {}
-	t = vim.tbl_deep_extend('force', t, getKeysAsSet(require('null-ls.builtins').diagnostics))
-	t = vim.tbl_deep_extend('force', t, getKeysAsSet(require('null-ls.builtins').formatting))
-	t = vim.tbl_deep_extend('force', t, getKeysAsSet(require('null-ls.builtins').code_actions))
-	t = vim.tbl_deep_extend('force', t, getKeysAsSet(require('null-ls.builtins').completion))
-	t = vim.tbl_deep_extend('force', t, getKeysAsSet(require('null-ls.builtins').hover))
-	local tools = vim.tbl_keys(lookup(t))
+	local sources = {}
+	sources = vim.tbl_deep_extend('force', sources, getKeysAsSet(require('null-ls.builtins').diagnostics))
+	sources = vim.tbl_deep_extend('force', sources, getKeysAsSet(require('null-ls.builtins').formatting))
+	sources = vim.tbl_deep_extend('force', sources, getKeysAsSet(require('null-ls.builtins').code_actions))
+	sources = vim.tbl_deep_extend('force', sources, getKeysAsSet(require('null-ls.builtins').completion))
+	sources = vim.tbl_deep_extend('force', sources, getKeysAsSet(require('null-ls.builtins').hover))
+	local tools = vim.tbl_keys(lookup(sources))
 	print(dump(tools))
 	return tools
 end

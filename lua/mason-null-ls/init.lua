@@ -51,7 +51,7 @@ local function lookup(t)
 	local mappings = require('mason-null-ls.mappings')
 	for source, _ in pairs(t) do
 		local wantedTools = mappings[source] or {}
-		for tool, _ in pairs(wantedTools) do
+		for _, tool in pairs(wantedTools) do
 			tools[tool] = true
 		end
 	end

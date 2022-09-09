@@ -79,8 +79,11 @@ local setup = function(settings)
 	t = merge(t, kDump(require('null-ls.builtins').hover))
 	print('done')
 	print(dump(t))
-	print(dump(tableToKeys(lookup(t))))
+	local tools = tableToKeys(lookup(t))
+	print(dump(tools))
 	SETTINGS = vim.tbl_deep_extend('force', SETTINGS, settings)
+	SETTINGS.ensure_installed = tools
+	print(dump(SETTINGS))
 	vim.validate({
 		ensure_installed = { SETTINGS.ensure_installed, 'table', true },
 		auto_update = { SETTINGS.auto_update, 'boolean', true },

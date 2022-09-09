@@ -21,7 +21,7 @@ local function dump(o)
 	end
 end
 
-local function getKeys(tab)
+local function getKeysAsSet(tab)
 	if tab == nil then
 		return nil
 	end
@@ -33,13 +33,13 @@ local function getKeys(tab)
 	return keyset
 end
 
-local function tableToKeys(tab)
-	local keyset = {}
-	for k, _ in pairs(tab) do
-		table.insert(keyset, k)
-	end
-	return keyset
-end
+-- local function tableToKeys(tab)
+-- 	local keyset = {}
+-- 	for k, _ in pairs(tab) do
+-- 		table.insert(keyset, k)
+-- 	end
+-- 	return keyset
+-- end
 
 -- local function merge(t1, t2)
 -- 	for k, v in pairs(t2) do
@@ -83,12 +83,12 @@ end
 
 local auto_get_packages = function()
 	local t = {}
-	t = vim.tbl_deep_extend('force', t, getKeys(require('null-ls.builtins').diagnostics))
-	t = vim.tbl_deep_extend('force', t, getKeys(require('null-ls.builtins').formatting))
-	t = vim.tbl_deep_extend('force', t, getKeys(require('null-ls.builtins').code_actions))
-	t = vim.tbl_deep_extend('force', t, getKeys(require('null-ls.builtins').completion))
-	t = vim.tbl_deep_extend('force', t, getKeys(require('null-ls.builtins').hover))
-	local tools = tableToKeys(lookup(t))
+	t = vim.tbl_deep_extend('force', t, getKeysAsSet(require('null-ls.builtins').diagnostics))
+	t = vim.tbl_deep_extend('force', t, getKeysAsSet(require('null-ls.builtins').formatting))
+	t = vim.tbl_deep_extend('force', t, getKeysAsSet(require('null-ls.builtins').code_actions))
+	t = vim.tbl_deep_extend('force', t, getKeysAsSet(require('null-ls.builtins').completion))
+	t = vim.tbl_deep_extend('force', t, getKeysAsSet(require('null-ls.builtins').hover))
+	local tools = vim.tbl_keys(lookup(t))
 	print(dump(tools))
 	return tools
 end

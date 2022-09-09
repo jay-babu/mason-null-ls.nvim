@@ -3,7 +3,7 @@ local mr = require('mason-registry')
 local SETTINGS = {
 	ensure_installed = {},
 	auto_update = false,
-	start_delay = 0,
+	automatic_installation = false,
 }
 
 local function dump(o)
@@ -65,20 +65,12 @@ local function lookup(t)
 end
 
 local setup = function(settings)
-	local t = {}
-	t = vim.tbl_deep_extend('force', t, getKeys(require('null-ls.builtins').diagnostics))
-	t = vim.tbl_deep_extend('force', t, getKeys(require('null-ls.builtins').formatting))
-	t = vim.tbl_deep_extend('force', t, getKeys(require('null-ls.builtins').code_actions))
-	t = vim.tbl_deep_extend('force', t, getKeys(require('null-ls.builtins').completion))
-	t = vim.tbl_deep_extend('force', t, getKeys(require('null-ls.builtins').hover))
-	local tools = tableToKeys(lookup(t))
-	print(dump(tools))
 	SETTINGS = vim.tbl_deep_extend('force', SETTINGS, settings)
 	SETTINGS.ensure_installed = tools
 	vim.validate({
 		ensure_installed = { SETTINGS.ensure_installed, 'table', true },
 		auto_update = { SETTINGS.auto_update, 'boolean', true },
-		start_delay = { SETTINGS.start_delay, 'number', true },
+		automatic_installation = { SETTINGS.automatic_installation, 'boolean', true },
 	})
 end
 
@@ -88,6 +80,18 @@ end
 
 local show_error = function(msg)
 	vim.schedule_wrap(vim.api.nvim_err_writeln(string.format('[mason-null-ls] %s', msg)))
+end
+
+local auto_get_packages = function()
+	local t = {}
+	t = vim.tbl_deep_extend('force', t, getKeys(require('null-ls.builtins').diagnostics))
+	t = vim.tbl_deep_extend('force', t, getKeys(require('null-ls.builtins').formatting))
+	t = vim.tbl_deep_extend('force', t, getKeys(require('null-ls.builtins').code_actions))
+	t = vim.tbl_deep_extend('force', t, getKeys(require('null-ls.builtins').completion))
+	t = vim.tbl_deep_extend('force', t, getKeys(require('null-ls.builtins').hover))
+	local tools = tableToKeys(lookup(t))
+	print(dump(tools))
+	return tools
 end
 
 local do_install = function(p, version, on_close)
@@ -106,6 +110,9 @@ local do_install = function(p, version, on_close)
 end
 
 local check_install = function(force_update)
+	if SETTINGS.automatic_installation then
+		SETTINGS.ensure_installed = vim.tbl_deep_extend('force', auto_get_packages(), SETTINGS.ensure_installed)
+	end
 	local completed = 0
 	local total = vim.tbl_count(SETTINGS.ensure_installed)
 	local on_close = function()

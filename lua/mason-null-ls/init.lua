@@ -66,7 +66,6 @@ end
 
 local setup = function(settings)
 	SETTINGS = vim.tbl_deep_extend('force', SETTINGS, settings)
-	SETTINGS.ensure_installed = tools
 	vim.validate({
 		ensure_installed = { SETTINGS.ensure_installed, 'table', true },
 		auto_update = { SETTINGS.auto_update, 'boolean', true },

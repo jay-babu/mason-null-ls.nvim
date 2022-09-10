@@ -1,25 +1,11 @@
 local mr = require('mason-registry')
+local mappings = require('mason-null-ls.mappings')
 
 local SETTINGS = {
 	ensure_installed = {},
 	auto_update = false,
 	automatic_installation = false,
 }
-
-local function dump(o)
-	if type(o) == 'table' then
-		local s = '{ '
-		for k, v in pairs(o) do
-			if type(k) ~= 'number' then
-				k = '"' .. k .. '"'
-			end
-			s = s .. '[' .. k .. '] = ' .. dump(v) .. ','
-		end
-		return s .. '} '
-	else
-		return tostring(o)
-	end
-end
 
 local function getKeysAsSet(tab)
 	if tab == nil then
@@ -33,28 +19,8 @@ local function getKeysAsSet(tab)
 	return keyset
 end
 
--- local function tableToKeys(tab)
--- 	local keyset = {}
--- 	for k, _ in pairs(tab) do
--- 		table.insert(keyset, k)
--- 	end
--- 	return keyset
--- end
-
--- local function merge(t1, t2)
--- 	for k, v in pairs(t2) do
--- 		if (type(v) == 'table') and (type(t1[k] or false) == 'table') then
--- 			merge(t1[k], t2[k])
--- 		else
--- 			t1[k] = v
--- 		end
--- 	end
--- 	return t1
--- end
-
 local function lookup(t)
 	local tools = {}
-	local mappings = require('mason-null-ls.mappings')
 	for source, _ in pairs(t) do
 		local wantedTools = mappings[source] or {}
 		for _, tool in pairs(wantedTools) do
@@ -89,7 +55,6 @@ local auto_get_packages = function()
 	sources = vim.tbl_deep_extend('force', sources, getKeysAsSet(require('null-ls.builtins').completion))
 	sources = vim.tbl_deep_extend('force', sources, getKeysAsSet(require('null-ls.builtins').hover))
 	local tools = vim.tbl_keys(lookup(sources))
-	print(dump(tools))
 	return tools
 end
 
@@ -118,7 +83,7 @@ local check_install = function(force_update)
 		completed = completed + 1
 		if completed >= total then
 			vim.api.nvim_exec_autocmds('User', {
-				pattern = 'MasonToolsUpdateCompleted',
+				pattern = 'MasonNullLsUpdateCompleted',
 				-- 'data' doesn't work with < 0.8.0
 				-- data = { packages = SETTINGS.ensure_installed },
 			})

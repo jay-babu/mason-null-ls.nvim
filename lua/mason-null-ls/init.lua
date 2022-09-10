@@ -58,7 +58,7 @@ local function lookup(t)
 			tools[tool] = true
 		end
 	end
-	return tools
+	return vim.tbl_keys(tools)
 end
 
 local setup = function(settings)
@@ -86,7 +86,7 @@ local auto_get_packages = function()
 	sources = vim.tbl_deep_extend('force', sources, vim.tbl_keys(require('null-ls.builtins').code_actions))
 	sources = vim.tbl_deep_extend('force', sources, vim.tbl_keys(require('null-ls.builtins').completion))
 	sources = vim.tbl_deep_extend('force', sources, vim.tbl_keys(require('null-ls.builtins').hover))
-	local tools = vim.tbl_keys(lookup(removeArrayDuplicates(sources)))
+	local tools = lookup(removeArrayDuplicates(sources))
 	return tools
 end
 

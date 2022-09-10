@@ -8,33 +8,6 @@ local SETTINGS = {
 	automatic_installation = false,
 }
 
-local function dump(o)
-	if type(o) == 'table' then
-		local s = '{ '
-		for k, v in pairs(o) do
-			if type(k) ~= 'number' then
-				k = '"' .. k .. '"'
-			end
-			s = s .. '[' .. k .. '] = ' .. dump(v) .. ','
-		end
-		return s .. '} '
-	else
-		return tostring(o)
-	end
-end
-
--- local function getKeysAsSet(tab)
--- 	if tab == nil then
--- 		return nil
--- 	end
--- 	local keyset = {}
---
--- 	for k, _ in pairs(tab) do
--- 		keyset[k] = true
--- 	end
--- 	return keyset
--- end
-
 local function removeArrayDuplicates(arr)
 	if arr == nil then
 		return nil
@@ -49,10 +22,8 @@ local function removeArrayDuplicates(arr)
 end
 
 local function lookup(t)
-	print(dump(t))
 	local tools = {}
 	for _, source in ipairs(t) do
-		print(dump(source))
 		local wantedTools = mappings[source] or {}
 		for _, tool in pairs(wantedTools) do
 			tools[tool] = true
@@ -79,7 +50,7 @@ local show_error = function(msg)
 	vim.schedule_wrap(vim.api.nvim_err_writeln(string.format('[mason-null-ls] %s', msg)))
 end
 
-local auto_get_packages = function()
+local function auto_get_packages()
 	local sources = {}
 	sources = vim.tbl_deep_extend('force', sources, vim.tbl_keys(require('null-ls.builtins').diagnostics))
 	sources = vim.tbl_deep_extend('force', sources, vim.tbl_keys(require('null-ls.builtins').formatting))
@@ -112,8 +83,7 @@ local check_install = function(force_update)
 	if SETTINGS.automatic_installation then
 		SETTINGS.ensure_installed = vim.tbl_deep_extend('force', auto_get_packages(), SETTINGS.ensure_installed)
 	end
-	print('ensure')
-	print(dump(SETTINGS.ensure_installed))
+
 	local completed = 0
 	local total = vim.tbl_count(SETTINGS.ensure_installed)
 	local on_close = function()

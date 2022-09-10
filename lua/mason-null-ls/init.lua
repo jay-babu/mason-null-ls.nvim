@@ -8,7 +8,7 @@ local SETTINGS = {
 	automatic_installation = false,
 }
 
-function dump(o)
+local function dump(o)
 	if type(o) == 'table' then
 		local s = '{ '
 		for k, v in pairs(o) do
@@ -112,6 +112,8 @@ local check_install = function(force_update)
 	if SETTINGS.automatic_installation then
 		SETTINGS.ensure_installed = vim.tbl_deep_extend('force', auto_get_packages(), SETTINGS.ensure_installed)
 	end
+	print('ensure')
+	print(dump(SETTINGS.ensure_installed))
 	local completed = 0
 	local total = vim.tbl_count(SETTINGS.ensure_installed)
 	local on_close = function()

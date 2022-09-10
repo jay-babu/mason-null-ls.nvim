@@ -3,25 +3,56 @@ local mappings = require('mason-null-ls.mappings')
 
 local SETTINGS = {
 	ensure_installed = {},
+	null_ls_sources = {},
 	auto_update = false,
 	automatic_installation = false,
 }
 
-local function getKeysAsSet(tab)
-	if tab == nil then
+function dump(o)
+	if type(o) == 'table' then
+		local s = '{ '
+		for k, v in pairs(o) do
+			if type(k) ~= 'number' then
+				k = '"' .. k .. '"'
+			end
+			s = s .. '[' .. k .. '] = ' .. dump(v) .. ','
+		end
+		return s .. '} '
+	else
+		return tostring(o)
+	end
+end
+
+-- local function getKeysAsSet(tab)
+-- 	if tab == nil then
+-- 		return nil
+-- 	end
+-- 	local keyset = {}
+--
+-- 	for k, _ in pairs(tab) do
+-- 		keyset[k] = true
+-- 	end
+-- 	return keyset
+-- end
+
+local function removeArrayDuplicates(arr)
+	if arr == nil then
 		return nil
 	end
-	local keyset = {}
 
-	for k, _ in pairs(tab) do
-		keyset[k] = true
+	local table = {}
+	for _, item in ipairs(arr) do
+		table[item] = true
 	end
-	return keyset
+
+	return vim.tbl_keys(table)
 end
 
 local function lookup(t)
+	print(dump(t))
 	local tools = {}
-	for source, _ in pairs(t) do
+	for _, source in ipairs(t) do
+		print(dump(source))
 		local wantedTools = mappings[source] or {}
 		for _, tool in pairs(wantedTools) do
 			tools[tool] = true
@@ -34,6 +65,7 @@ local setup = function(settings)
 	SETTINGS = vim.tbl_deep_extend('force', SETTINGS, settings)
 	vim.validate({
 		ensure_installed = { SETTINGS.ensure_installed, 'table', true },
+		null_ls_sources = { SETTINGS.null_ls_sources, 'table', true },
 		auto_update = { SETTINGS.auto_update, 'boolean', true },
 		automatic_installation = { SETTINGS.automatic_installation, 'boolean', true },
 	})
@@ -49,12 +81,12 @@ end
 
 local auto_get_packages = function()
 	local sources = {}
-	sources = vim.tbl_deep_extend('force', sources, getKeysAsSet(require('null-ls.builtins').diagnostics))
-	sources = vim.tbl_deep_extend('force', sources, getKeysAsSet(require('null-ls.builtins').formatting))
-	sources = vim.tbl_deep_extend('force', sources, getKeysAsSet(require('null-ls.builtins').code_actions))
-	sources = vim.tbl_deep_extend('force', sources, getKeysAsSet(require('null-ls.builtins').completion))
-	sources = vim.tbl_deep_extend('force', sources, getKeysAsSet(require('null-ls.builtins').hover))
-	local tools = vim.tbl_keys(lookup(sources))
+	sources = vim.tbl_deep_extend('force', sources, vim.tbl_keys(require('null-ls.builtins').diagnostics))
+	sources = vim.tbl_deep_extend('force', sources, vim.tbl_keys(require('null-ls.builtins').formatting))
+	sources = vim.tbl_deep_extend('force', sources, vim.tbl_keys(require('null-ls.builtins').code_actions))
+	sources = vim.tbl_deep_extend('force', sources, vim.tbl_keys(require('null-ls.builtins').completion))
+	sources = vim.tbl_deep_extend('force', sources, vim.tbl_keys(require('null-ls.builtins').hover))
+	local tools = vim.tbl_keys(lookup(removeArrayDuplicates(sources)))
 	return tools
 end
 

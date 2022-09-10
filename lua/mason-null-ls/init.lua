@@ -106,6 +106,9 @@ local do_install = function(p, version, on_close)
 end
 
 local check_install = function(force_update)
+	SETTINGS.ensure_installed =
+		vim.tbl_deep_extend('force', lookup(SETTINGS.null_ls_sources), SETTINGS.ensure_installed)
+
 	if SETTINGS.automatic_installation then
 		SETTINGS.ensure_installed = vim.tbl_deep_extend('force', auto_get_packages(), SETTINGS.ensure_installed)
 	end

@@ -3,37 +3,40 @@ local mappings = require('mason-null-ls.mappings')
 
 local SETTINGS = {
 	ensure_installed = {},
+	null_ls_sources = {},
 	auto_update = false,
 	automatic_installation = false,
 }
 
-local function getKeysAsSet(tab)
-	if tab == nil then
+local function removeArrayDuplicates(arr)
+	if arr == nil then
 		return nil
 	end
-	local keyset = {}
 
-	for k, _ in pairs(tab) do
-		keyset[k] = true
+	local table = {}
+	for _, item in ipairs(arr) do
+		table[item] = true
 	end
-	return keyset
+
+	return vim.tbl_keys(table)
 end
 
 local function lookup(t)
 	local tools = {}
-	for source, _ in pairs(t) do
+	for _, source in ipairs(t) do
 		local wantedTools = mappings[source] or {}
 		for _, tool in pairs(wantedTools) do
 			tools[tool] = true
 		end
 	end
-	return tools
+	return vim.tbl_keys(tools)
 end
 
 local setup = function(settings)
 	SETTINGS = vim.tbl_deep_extend('force', SETTINGS, settings)
 	vim.validate({
 		ensure_installed = { SETTINGS.ensure_installed, 'table', true },
+		null_ls_sources = { SETTINGS.null_ls_sources, 'table', true },
 		auto_update = { SETTINGS.auto_update, 'boolean', true },
 		automatic_installation = { SETTINGS.automatic_installation, 'boolean', true },
 	})
@@ -47,14 +50,14 @@ local show_error = function(msg)
 	vim.schedule_wrap(vim.api.nvim_err_writeln(string.format('[mason-null-ls] %s', msg)))
 end
 
-local auto_get_packages = function()
+local function auto_get_packages()
 	local sources = {}
-	sources = vim.tbl_deep_extend('force', sources, getKeysAsSet(require('null-ls.builtins').diagnostics))
-	sources = vim.tbl_deep_extend('force', sources, getKeysAsSet(require('null-ls.builtins').formatting))
-	sources = vim.tbl_deep_extend('force', sources, getKeysAsSet(require('null-ls.builtins').code_actions))
-	sources = vim.tbl_deep_extend('force', sources, getKeysAsSet(require('null-ls.builtins').completion))
-	sources = vim.tbl_deep_extend('force', sources, getKeysAsSet(require('null-ls.builtins').hover))
-	local tools = vim.tbl_keys(lookup(sources))
+	sources = vim.tbl_deep_extend('force', sources, vim.tbl_keys(require('null-ls.builtins').diagnostics))
+	sources = vim.tbl_deep_extend('force', sources, vim.tbl_keys(require('null-ls.builtins').formatting))
+	sources = vim.tbl_deep_extend('force', sources, vim.tbl_keys(require('null-ls.builtins').code_actions))
+	sources = vim.tbl_deep_extend('force', sources, vim.tbl_keys(require('null-ls.builtins').completion))
+	sources = vim.tbl_deep_extend('force', sources, vim.tbl_keys(require('null-ls.builtins').hover))
+	local tools = lookup(removeArrayDuplicates(sources))
 	return tools
 end
 
@@ -74,9 +77,13 @@ local do_install = function(p, version, on_close)
 end
 
 local check_install = function(force_update)
+	SETTINGS.ensure_installed =
+		vim.tbl_deep_extend('force', lookup(SETTINGS.null_ls_sources), SETTINGS.ensure_installed)
+
 	if SETTINGS.automatic_installation then
 		SETTINGS.ensure_installed = vim.tbl_deep_extend('force', auto_get_packages(), SETTINGS.ensure_installed)
 	end
+
 	local completed = 0
 	local total = vim.tbl_count(SETTINGS.ensure_installed)
 	local on_close = function()

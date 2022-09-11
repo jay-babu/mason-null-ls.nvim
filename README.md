@@ -75,6 +75,13 @@ require('mason-null-ls').setup {
     'vint',
   },
 
+	null_ls_sources = {
+		-- Will install the all necessary tools from Mason, in this case `write-good`.
+		-- Source must map to the source name in `null-ls`.
+		-- Pinning a version or toggling auto_update per tool is not supported.
+		'write_good',
+	},
+
   -- if set to true this will check each tool for updates. If updates
   -- are available the tool will be updated. This setting does not
   -- affect :MasonNullLsUpdate or :MasonNullLsInstall.

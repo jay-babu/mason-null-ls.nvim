@@ -1,140 +1,135 @@
-local mr = require('mason-registry')
-local mappings = require('mason-null-ls.mappings')
+local log = require('mason-core.log')
+local _ = require('mason-core.functional')
 
-local SETTINGS = {
-	ensure_installed = {},
-	null_ls_sources = {},
-	auto_update = false,
-	automatic_installation = false,
-}
+local M = {}
 
-local function removeArrayDuplicates(arr)
-	if arr == nil then
-		return nil
+---@param config MasonNullLsSettings | nil
+function M.setup(config)
+	local settings = require('mason-null-ls.settings')
+
+	if config then
+		settings.set(config)
 	end
 
-	local table = {}
-	for _, item in ipairs(arr) do
-		table[item] = true
+	-- NOTE: this is left here for future porting in case needed
+	-- local ok, err = pcall(function()
+	--     require "mason-lspconfig.lspconfig_hook"()
+	--     require "mason-lspconfig.server_config_extensions"()
+	-- end)
+	-- if not ok then
+	--     log.error("Failed to set up lspconfig integration.", err)
+	-- end
+
+	if #settings.current.ensure_installed > 0 then
+		require('mason-null-ls.ensure_installed')()
 	end
 
-	return vim.tbl_keys(table)
+	require('mason-null-ls.api.command')
 end
 
-local function lookup(t)
-	local tools = {}
-	for _, source in ipairs(t) do
-		local wantedTools = mappings[source] or {}
-		for _, tool in pairs(wantedTools) do
-			tools[tool] = true
+---See `:h mason-null-ls.setup_handlers()`
+---@param handlers table<string, fun(source_name: string)>
+function M.setup_handlers(handlers)
+	local Optional = require('mason-core.optional')
+	local source_mapping = require('mason-null-ls.mappings.source')
+	local registry = require('mason-registry')
+	local notify = require('mason-core.notify')
+
+	local default_handler = Optional.of_nilable(handlers[1])
+
+	_.each(function(handler)
+		if type(handler) == 'string' and not source_mapping.null_ls_to_package[handler] then
+			notify(
+				('mason-null-ls.setup_handlers: Received handler for unknown null-ls source name: %s.'):format(handler),
+				vim.log.levels.WARN
+			)
 		end
-	end
-	return vim.tbl_keys(tools)
-end
+	end, _.keys(handlers))
 
-local setup = function(settings)
-	SETTINGS = vim.tbl_deep_extend('force', SETTINGS, settings)
-	vim.validate({
-		ensure_installed = { SETTINGS.ensure_installed, 'table', true },
-		null_ls_sources = { SETTINGS.null_ls_sources, 'table', true },
-		auto_update = { SETTINGS.auto_update, 'boolean', true },
-		automatic_installation = { SETTINGS.automatic_installation, 'boolean', true },
-	})
-end
-
-local show = function(msg)
-	vim.schedule_wrap(print(string.format('[mason-null-ls] %s', msg)))
-end
-
-local show_error = function(msg)
-	vim.schedule_wrap(vim.api.nvim_err_writeln(string.format('[mason-null-ls] %s', msg)))
-end
-
-local function auto_get_packages()
-	local sources = {}
-	sources = vim.tbl_deep_extend('force', sources, vim.tbl_keys(require('null-ls.builtins').diagnostics))
-	sources = vim.tbl_deep_extend('force', sources, vim.tbl_keys(require('null-ls.builtins').formatting))
-	sources = vim.tbl_deep_extend('force', sources, vim.tbl_keys(require('null-ls.builtins').code_actions))
-	sources = vim.tbl_deep_extend('force', sources, vim.tbl_keys(require('null-ls.builtins').completion))
-	sources = vim.tbl_deep_extend('force', sources, vim.tbl_keys(require('null-ls.builtins').hover))
-	local tools = lookup(removeArrayDuplicates(sources))
-	return tools
-end
-
-local do_install = function(p, version, on_close)
-	if version ~= nil then
-		show(string.format('%s: updating to %s', p.name, version))
-	else
-		show(string.format('%s: installing', p.name))
-	end
-	p:once('install:success', function()
-		show(string.format('%s: successfully installed', p.name))
-	end)
-	p:once('install:failed', function()
-		show_error(string.format('%s: failed to install', p.name))
-	end)
-	p:install({ version = version }):once('closed', vim.schedule_wrap(on_close))
-end
-
-local check_install = function(force_update)
-	SETTINGS.ensure_installed =
-		vim.tbl_deep_extend('force', lookup(SETTINGS.null_ls_sources), SETTINGS.ensure_installed)
-
-	if SETTINGS.automatic_installation then
-		SETTINGS.ensure_installed = vim.tbl_deep_extend('force', auto_get_packages(), SETTINGS.ensure_installed)
+	---@param pkg_name string
+	local function get_source_name(pkg_name)
+		return Optional.of_nilable(source_mapping.package_to_null_ls[pkg_name])
 	end
 
-	local completed = 0
-	local total = vim.tbl_count(SETTINGS.ensure_installed)
-	local on_close = function()
-		completed = completed + 1
-		if completed >= total then
-			vim.api.nvim_exec_autocmds('User', {
-				pattern = 'MasonNullLsUpdateCompleted',
-				-- 'data' doesn't work with < 0.8.0
-				-- data = { packages = SETTINGS.ensure_installed },
-			})
-		end
-	end
-	for _, item in ipairs(SETTINGS.ensure_installed or {}) do
-		local name, version, auto_update
-		if type(item) == 'table' then
-			name = item[1]
-			version = item.version
-			auto_update = item.auto_update
-		else
-			name = item
-		end
-		local p = mr.get_package(name)
-		if p:is_installed() then
-			if version ~= nil then
-				p:get_installed_version(function(ok, installed_version)
-					if ok and installed_version ~= version then
-						do_install(p, version, on_close)
-					else
-						completed = completed + 1
-					end
-				end)
-			elseif
-				force_update or (force_update == nil and (auto_update or (auto_update == nil and SETTINGS.auto_update)))
-			then
-				p:check_new_version(function(ok, version)
-					if ok then
-						do_install(p, version.latest_version, on_close)
-					else
-						completed = completed + 1
-					end
-				end)
-			else
-				completed = completed + 1
+	local function call_handler(source_name)
+		log.fmt_trace('Checking handler for %s', source_name)
+		Optional.of_nilable(handlers[source_name]):or_(_.always(default_handler)):if_present(function(handler)
+			log.fmt_trace('Calling handler for %s', source_name)
+			local ok, err = pcall(handler, source_name)
+			if not ok then
+				vim.notify(err, vim.log.levels.ERROR)
 			end
-		else
-			do_install(p, version, on_close)
-		end
+		end)
+	end
+
+	local installed_sources = _.filter_map(get_source_name, registry.get_installed_package_names())
+	_.each(call_handler, installed_sources)
+	registry:on(
+		'package:install:success',
+		vim.schedule_wrap(function(pkg)
+			get_source_name(pkg.name):if_present(call_handler)
+		end)
+	)
+end
+
+---@return string[]
+function M.get_installed_sources()
+	local Optional = require('mason-core.optional')
+	local registry = require('mason-registry')
+	local source_mapping = require('mason-null-ls.mappings.source')
+
+	return _.filter_map(function(pkg_name)
+		return Optional.of_nilable(source_mapping.package_to_null_ls[pkg_name])
+	end, registry.get_installed_package_names())
+end
+
+---@param filetype string | string[]
+local function is_source_in_filetype(filetype)
+	local filetype_mapping = require('mason-null-ls.mappings.filetype')
+
+	local function get_sources_by_filetype(ft)
+		return filetype_mapping[ft] or {}
+	end
+
+	local source_candidates = _.compose(
+		_.set_of,
+		_.cond({
+			{ _.is('string'), get_sources_by_filetype },
+			{ _.is('table'), _.compose(_.flatten, _.map(get_sources_by_filetype)) },
+			{ _.T, _.always({}) },
+		})
+	)(filetype)
+
+	---@param source_name string
+	---@return boolean
+	return function(source_name)
+		return source_candidates[source_name]
 	end
 end
 
-return {
-	check_install = check_install,
-	setup = setup,
-}
+---Get a list of available sources in mason-registry
+---@param filter { filetype: string | string[] }?: (optional) Used to filter the list of source names.
+--- The available keys are
+---   - filetype (string | string[]): Only return sources with matching filetype
+---@return string[]
+function M.get_available_sources(filter)
+	local registry = require('mason-registry')
+	local source_mapping = require('mason-null-ls.mappings.source')
+	local Optional = require('mason-core.optional')
+	filter = filter or {}
+	local predicates = {}
+
+	if filter.filetype then
+		table.insert(predicates, is_source_in_filetype(filter.filetype))
+	end
+
+	return _.filter_map(function(pkg_name)
+		return Optional.of_nilable(source_mapping.package_to_null_ls[pkg_name]):map(function(source_name)
+			if #predicates == 0 or _.all_pass(predicates, source_name) then
+				return source_name
+			end
+		end)
+	end, registry.get_all_package_names())
+end
+
+return M

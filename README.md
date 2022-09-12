@@ -1,125 +1,167 @@
-# mason-null-ls
+`mason-null-ls` bridges `mason.nvim` with the `null-ls` plugin - making it easier to use both plugins together.
 
-Install or upgrade the required tools needed for null-ls where available in Mason.
 
-Currently installation of the tools must occur using a command on startup. 
+# Introduction
 
-`require("mason-null-ls").check_install()`
+`mason-null-ls.nvim` closes some gaps that exist between `mason.nvim` and `null-ls`. Its main responsibilities are:
 
-Uses Mason do the heavy lifting of installing the dependencies.
+-   provide extra convenience APIs such as the `:NullLsInstall` command
+-   allow you to (i) automatically install, and (ii) automatically set up a predefined list of sources
+-   translate between `null-ls` source names and `mason.nvim` package names (e.g. `haml_lint` <-> `haml-lint`)
 
-**Can automatically parse the null-ls table and install the necessary tools available in Mason.**
+It is recommended to use this extension if you use `mason.nvim` and `null-ls`.
 
-Note: Going through all null-ls builtins and mapping it to the correct tool name in Mason is still a WIP.
-Feel free to create an issue or PR with a source you would like available immediately.
+**Note: this plugin uses the `null-ls` source names in the APIs it exposes - not `mason.nvim` package names.
 
-## Dependencies
 
-- [mason.nvim](https://github.com/williamboman/mason.nvim.git)
-- [null-ls.nvim](https://github.com/jose-elias-alvarez/null-ls.nvim.git)
-- Neovim >0.7
+# Requirements
 
-## Installation
+-   neovim `>= 0.7.0`
+-   `mason.nvim`
+-   `null-ls.nvim`
 
-### Packer Example
+
+# Installation
+
+## [Packer](https://github.com/wbthomason/packer.nvim)
 
 ```lua
 use {
-	"jayp0521/mason-null-ls.nvim",
-	after = {
-		"null-ls.nvim",
-		"mason.nvim",
-	},
+    "williamboman/mason.nvim",
+    "jayp0521/mason-null-ls.nvim",
+    "jose-elias-alvarez/null-ls.nvim",
 }
 ```
 
-### Recommended
+## vim-plug
+
+```vim
+Plug 'williamboman/mason.nvim'
+Plug 'jayp0521/mason-null-ls.nvim'
+Plug 'jose-elias-alvarez/null-ls.nvim'
+```
+
+
+# Setup
+
+It's important that you set up the plugins in the following order:
+
+1. `mason.nvim`
+2. `mason-null-ls.nvim`
+3. `null-ls`
+
+Pay extra attention to this if you're using a plugin manager to load plugins for you, as there are no guarantees it'll
+load plugins in the correct order unless explicitly instructed to.
+
 ```lua
-use {
-	"jayp0521/mason-null-ls.nvim",
-	after = {
-		"null-ls.nvim",
-		"mason.nvim",
-	},
-	config = function()
-		require("mason-null-ls").setup({
-			automatic_installation = true,
-		})
-		require("mason-null-ls").check_install(true)
-	end,
+require("mason").setup()
+require("mason-null-ls").setup()
+```
+
+Refer to the [Configuration](#configuration) section for information about which settings are available.
+
+
+# Commands
+
+-   `:NullInstall [<source>...]` - installs the provided sources
+-   `:NullUninstall <source> ...` - uninstalls the provided sources
+
+
+# Configuration
+
+You may optionally configure certain behavior of `mason-null-ls.nvim` when calling the `.setup()` function. Refer to
+the [default configuration](#default-configuration) for a list of all available settings.
+
+Example:
+
+```lua
+require("mason-null-ls").setup({
+    ensure_installed = { "stylua", "jq" }
+})
+```
+
+## Default configuration
+
+```lua
+local DEFAULT_SETTINGS = {
+    -- A list of sources to automatically install if they're not already installed. Example: { "rust_analyzer@nightly", "sumneko_lua" }
+    -- This setting has no relation with the `automatic_installation` setting.
+    ensure_installed = {},
 }
 ```
 
-## Configuration
+
+# Setup handlers usage
+
+The `setup_handlers()` function provides a dynamic way of setting up sources and any other needed logic, It can also do that during runtime.
 
 ```lua
-require('mason-null-ls').setup {
+  local null_ls = require 'null-ls'
 
-  -- a list of all tools you want to ensure are installed upon
-  -- start; they should be the names Mason uses for each tool
-  ensure_installed = {
-
-    -- you can pin a tool to a particular version
-    { 'golangci-lint', version = '1.47.0' },
-
-    -- you can turn off/on auto_update per tool
-    { 'shellcheck', auto_update = true },
-
-    'stylua',
-    'shellcheck',
-    'editorconfig-checker',
-    'revive',
-    'shellcheck',
-    'shfmt',
-    'staticcheck',
-    'vint',
-  },
-
-	null_ls_sources = {
-		-- Will install the all necessary tools from Mason, in this case `write-good`.
-		-- Source must map to the source name in `null-ls`.
-		-- Pinning a version or toggling auto_update per tool is not supported.
-		'write_good',
-	},
-
-  -- if set to true this will check each tool for updates. If updates
-  -- are available the tool will be updated. This setting does not
-  -- affect :MasonNullLsUpdate or :MasonNullLsInstall.
-  -- Default: false
-  auto_update = false,
-
-  -- if set to true, the tool will check null-ls for the available sources,
-  -- and then install the dependency(ies) if available in mason.
-  -- Default: true
-  automatic_installation = true
-}
-```
-
-## Commands
-
-`:MasonNullLsInstall` - only installs tools that are missing or at the incorrect version
-`:MasonNullLsUpdate` - install missing tools and update already installed tools
-
-## Events
-
-Upon completion of any `mason-null-ls` initiated installation/update a user event will be
-emitted named `MasonNullLsUpdateCompleted`. To use this event you can setup an event handler like so:
-
-```lua
-  vim.api.nvim_create_autocmd('User', {
-    pattern = 'MasonNullLsUpdateCompleted',
-    callback = function()
-      vim.schedule(print 'mason-null-ls has finished')
+  require 'mason-null-ls'.setup { ensure_installed = {'stylua', 'jq'} }
+  
+  require 'mason-null-ls'.setup_handlers {
+    function(source_name)
+      -- all sources with no handler get passed here
     end,
-  })
+    stylua = function()
+      null_ls.register(null_ls.builtins.formatting.stylua)
+    end,
+    jq = function()
+      null_ls.register(null_ls.builtins.formatting.jq)
+    end
+  }
+
+  -- will setup any installed and configured sources above
+  null_ls.setup()
 ```
 
-## Suggestions / Complaints / Help
 
-Create an issue at: https://github.com/jayp0521/mason-null-ls.nvim/issues
+# Available Null-ls sources
 
-## Acknowledgments
 
-This tool depends on `mason.nvim` and `null-ls.nvim` as mentioned earlier.
-It is also heavily inspired by [`mason-tool-installer`](https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim).
-Much of the code and even this README.md is based off of it.
+| Filetype                                                  | Source name            |
+|-----------------------------------------------------------|------------------------|
+| bzl                                                       | `buildifier`           |
+| c cpp                                                     | `cpplint`              |
+| django jinja.html htmldjango                              | `djlint`               |
+| dockerfile                                                | `hadolint`             |
+| eruby                                                     | `erb_lint`             |
+| gitcommit                                                 | `gitlint`              |
+| go                                                        | `golangci_lint`        |
+| go                                                        | `revive`               |
+| go                                                        | `staticcheck`          |
+| haml                                                      | `haml_lint`            |
+| javascript javascriptreact typescript typescriptreact     | `xo`                   |
+| javascript javascriptreact typescript typescriptreact vue | `eslint_d`             |
+| jinja.html htmldjango                                     | `curlylint`            |
+| json                                                      | `jq`                   |
+| kotlin                                                    | `ktlint`               |
+| lua                                                       | `luacheck`             |
+| lua                                                       | `selene`               |
+| lua                                                       | `stylua`               |
+| markdown                                                  | `alex`                 |
+| markdown                                                  | `markdownlint`         |
+| markdown                                                  | `write_good`           |
+| markdown tex                                              | `proselint`            |
+| markdown tex asciidoc                                     | `vale`                 |
+| php                                                       | `psalm`                |
+| proto                                                     | `buf`                  |
+| python                                                    | `flake8`               |
+| python                                                    | `mypy`                 |
+| python                                                    | `pylint`               |
+| python                                                    | `vulture`              |
+| ruby                                                      | `rubocop`              |
+| ruby                                                      | `standardrb`           |
+| sh                                                        | `shellcheck`           |
+| sh                                                        | `shfmt`                |
+| solidity                                                  | `solhint`              |
+| sql                                                       | `sqlfluff`             |
+| vim                                                       | `vint`                 |
+| yaml                                                      | `actionlint`           |
+| yaml                                                      | `yamllint`             |
+| yaml Json                                                 | `cfn-lint`             |
+|                                                           | `cspell`               |
+|                                                           | `editorconfig_checker` |
+|                                                           | `misspell`             |
+|                                                           | `textlint`             |

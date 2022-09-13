@@ -85,7 +85,7 @@ end
 
 ---@param filetype string | string[]
 local function is_source_in_filetype(filetype)
-	local filetype_mapping = require('mason-null-ls.mappings.filetype')
+	local filetype_mappings = require('mason-null-ls.mappings.filetype')
 
 	local function get_sources_by_filetype(ft)
 		return filetype_mapping[ft] or {}

@@ -113,7 +113,7 @@ end, {
 	complete = 'custom,v:lua.mason_null_ls_completion.available_source_completion',
 })
 
-local function NullLsUninstall(srouces)
+local function NullLsUninstall(sources)
 	require('mason.ui').open()
 	require('mason.ui').set_view('All')
 	local registry = require('mason-registry')

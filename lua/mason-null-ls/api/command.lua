@@ -8,19 +8,19 @@ local _ = require('mason-core.functional')
 local function parse_packages_from_user_args(user_args)
 	local registry = require('mason-registry')
 	local Package = require('mason-core.package')
-	local source_mapping = require('mason-null-ls.mappings.source')
-	local language_mapping = require('mason.mappings.language')
+	local source_mappings = require('mason-null-ls.mappings.source')
+	local language_mappings = require('mason.mappings.language')
 
 	return _.filter_map(function(source_specifier)
 		local source_name, version = Package.Parse(source_specifier)
 		-- 1. first see if the provided arg is an actual null-ls source name
 		return Optional
-			.of_nilable(source_mapping.null_ls_to_package[source_name])
+			.of_nilable(source_mappings.null_ls_to_package[source_name])
 			-- 2. if not, check if it's a language specifier (e.g., "typescript" or "java")
 			:or_(function()
-				return Optional.of_nilable(language_mapping[source_name]):map(function(package_names)
+				return Optional.of_nilable(language_mappings[source_name]):map(function(package_names)
 					local package_names = _.filter(function(package_name)
-						return source_mapping.null_ls_to_package[package_name] ~= nil
+						return source_mappings.null_ls_to_package[package_name] ~= nil
 					end, package_names)
 
 					if #package_names == 0 then
@@ -32,7 +32,7 @@ local function parse_packages_from_user_args(user_args)
 							source_name
 						),
 						format_item = function(package_name)
-							local source_name = source_mapping.null_ls_to_package[package_name]
+							local source_name = source_mappings.null_ls_to_package[package_name]
 							if registry.is_installed(package_name) then
 								return ('%s (installed)'):format(source_name)
 							else
@@ -53,18 +53,18 @@ end
 
 ---@async
 local function parse_packages_from_heuristics()
-	local source_mapping = require('mason-null-ls.mappings.source')
+	local source_mappings = require('mason-null-ls.mappings.source')
 	local registry = require('mason-registry')
 
 	-- Prompt user which source they want to install (based on the current filetype)
 	local current_ft = vim.api.nvim_buf_get_option(vim.api.nvim_get_current_buf(), 'filetype')
-	local filetype_mapping = require('mason-null-ls.mappings.filetype')
-	return Optional.of_nilable(filetype_mapping[current_ft])
+	local filetype_mappings = require('mason-null-ls.mappings.filetype')
+	return Optional.of_nilable(filetype_mappings[current_ft])
 		:map(function(source_names)
 			return a.promisify(vim.ui.select)(source_names, {
 				prompt = ('Please select which source you want to install for filetype %q:'):format(current_ft),
 				format_item = function(source_name)
-					if registry.is_installed(source_mapping.null_ls_to_package[source_name]) then
+					if registry.is_installed(source_mappings.null_ls_to_package[source_name]) then
 						return ('%s (installed)'):format(source_name)
 					else
 						return source_name
@@ -73,7 +73,7 @@ local function parse_packages_from_heuristics()
 			})
 		end)
 		:map(function(source_name)
-			local package_name = source_mapping.null_ls_to_package[source_name]
+			local package_name = source_mappings.null_ls_to_package[source_name]
 			return { { package = package_name, version = nil } }
 		end)
 		:or_else_get(function()
@@ -117,9 +117,9 @@ local function NullLsUninstall(sources)
 	require('mason.ui').open()
 	require('mason.ui').set_view('All')
 	local registry = require('mason-registry')
-	local source_mapping = require('mason-null-ls.mappings.source')
+	local source_mappings = require('mason-null-ls.mappings.source')
 	for _, source_specifier in ipairs(sources) do
-		local package_name = source_mapping.null_ls_to_package[source_specifier]
+		local package_name = source_mappings.null_ls_to_package[source_specifier]
 		local pkg = registry.get_package(package_name)
 		pkg:uninstall()
 	end
@@ -136,9 +136,9 @@ end, {
 _G.mason_null_ls_completion = {
 	available_source_completion = function()
 		local available_sources = require('mason-null-ls').get_available_sources()
-		local language_mapping = require('mason.mappings.language')
+		local language_mappings = require('mason.mappings.language')
 		local sort_deduped = _.compose(_.sort_by(_.identity), _.uniq_by(_.identity))
-		local completions = sort_deduped(_.concat(_.keys(language_mapping), available_sources))
+		local completions = sort_deduped(_.concat(_.keys(language_mappings), available_sources))
 		return table.concat(completions, '\n')
 	end,
 	installed_source_completion = function()

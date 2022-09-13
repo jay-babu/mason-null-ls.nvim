@@ -31,14 +31,14 @@ end
 ---@param handlers table<string, fun(source_name: string)>
 function M.setup_handlers(handlers)
 	local Optional = require('mason-core.optional')
-	local source_mapping = require('mason-null-ls.mappings.source')
+	local source_mappings = require('mason-null-ls.mappings.source')
 	local registry = require('mason-registry')
 	local notify = require('mason-core.notify')
 
 	local default_handler = Optional.of_nilable(handlers[1])
 
 	_.each(function(handler)
-		if type(handler) == 'string' and not source_mapping.null_ls_to_package[handler] then
+		if type(handler) == 'string' and not source_mappings.null_ls_to_package[handler] then
 			notify(
 				('mason-null-ls.setup_handlers: Received handler for unknown null-ls source name: %s.'):format(handler),
 				vim.log.levels.WARN
@@ -48,7 +48,7 @@ function M.setup_handlers(handlers)
 
 	---@param pkg_name string
 	local function get_source_name(pkg_name)
-		return Optional.of_nilable(source_mapping.package_to_null_ls[pkg_name])
+		return Optional.of_nilable(source_mappings.package_to_null_ls[pkg_name])
 	end
 
 	local function call_handler(source_name)
@@ -76,10 +76,10 @@ end
 function M.get_installed_sources()
 	local Optional = require('mason-core.optional')
 	local registry = require('mason-registry')
-	local source_mapping = require('mason-null-ls.mappings.source')
+	local source_mappings = require('mason-null-ls.mappings.source')
 
 	return _.filter_map(function(pkg_name)
-		return Optional.of_nilable(source_mapping.package_to_null_ls[pkg_name])
+		return Optional.of_nilable(source_mappings.package_to_null_ls[pkg_name])
 	end, registry.get_installed_package_names())
 end
 
@@ -88,7 +88,7 @@ local function is_source_in_filetype(filetype)
 	local filetype_mappings = require('mason-null-ls.mappings.filetype')
 
 	local function get_sources_by_filetype(ft)
-		return filetype_mapping[ft] or {}
+		return filetype_mappings[ft] or {}
 	end
 
 	local source_candidates = _.compose(
@@ -114,7 +114,7 @@ end
 ---@return string[]
 function M.get_available_sources(filter)
 	local registry = require('mason-registry')
-	local source_mapping = require('mason-null-ls.mappings.source')
+	local source_mappings = require('mason-null-ls.mappings.source')
 	local Optional = require('mason-core.optional')
 	filter = filter or {}
 	local predicates = {}
@@ -124,7 +124,7 @@ function M.get_available_sources(filter)
 	end
 
 	return _.filter_map(function(pkg_name)
-		return Optional.of_nilable(source_mapping.package_to_null_ls[pkg_name]):map(function(source_name)
+		return Optional.of_nilable(source_mappings.package_to_null_ls[pkg_name]):map(function(source_name)
 			if #predicates == 0 or _.all_pass(predicates, source_name) then
 				return source_name
 			end

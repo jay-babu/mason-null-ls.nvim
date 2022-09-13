@@ -118,7 +118,7 @@ local function NullLsUninstall(sources)
 	require('mason.ui').set_view('All')
 	local registry = require('mason-registry')
 	local source_mapping = require('mason-null-ls.mappings.source')
-	for _, source_specifier in ipairs(srouces) do
+	for _, source_specifier in ipairs(sources) do
 		local package_name = source_mapping.null_ls_to_package[source_specifier]
 		local pkg = registry.get_package(package_name)
 		pkg:uninstall()

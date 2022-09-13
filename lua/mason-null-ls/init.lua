@@ -27,7 +27,6 @@ function M.setup(config)
 	require('mason-null-ls.api.command')
 end
 
----See `:h mason-null-ls.setup_handlers()`
 ---@param handlers table<string, fun(source_name: string)>
 function M.setup_handlers(handlers)
 	local Optional = require('mason-core.optional')

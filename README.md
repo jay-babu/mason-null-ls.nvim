@@ -98,7 +98,9 @@ The `setup_handlers()` function provides a dynamic way of setting up sources and
 ```lua
   local null_ls = require 'null-ls'
 
-  require 'mason-null-ls'.setup { ensure_installed = {'stylua', 'jq'} }
+require ('mason-null-ls').setup({
+  ensure_installed = {'stylua', 'jq'}
+})
   
   require 'mason-null-ls'.setup_handlers {
     function(source_name)

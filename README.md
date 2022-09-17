@@ -42,6 +42,7 @@ use {
 	after = {
 		"null-ls.nvim",
 		"mason.nvim",
+		"mason-tool-installer.nvim"
 	},
 	config = function()
 		require("mason-null-ls").setup({

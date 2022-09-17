@@ -28,8 +28,8 @@ It is recommended to use this extension if you use `mason.nvim` and `null-ls`.
 ```lua
 use {
     "williamboman/mason.nvim",
-    "jayp0521/mason-null-ls.nvim",
     "jose-elias-alvarez/null-ls.nvim",
+    "jayp0521/mason-null-ls.nvim",
 }
 ```
 
@@ -37,8 +37,8 @@ use {
 
 ```vim
 Plug 'williamboman/mason.nvim'
-Plug 'jayp0521/mason-null-ls.nvim'
 Plug 'jose-elias-alvarez/null-ls.nvim'
+Plug 'jayp0521/mason-null-ls.nvim'
 ```
 
 
@@ -47,14 +47,15 @@ Plug 'jose-elias-alvarez/null-ls.nvim'
 It's important that you set up the plugins in the following order:
 
 1. `mason.nvim`
-2. `mason-null-ls.nvim`
-3. `null-ls`
+2. `null-ls`
+3. `mason-null-ls.nvim`
 
 Pay extra attention to this if you're using a plugin manager to load plugins for you, as there are no guarantees it'll
 load plugins in the correct order unless explicitly instructed to.
 
 ```lua
 require("mason").setup()
+require("null-ls").setup()
 require("mason-null-ls").setup()
 ```
 
@@ -84,9 +85,12 @@ require("mason-null-ls").setup({
 
 ```lua
 local DEFAULT_SETTINGS = {
-    -- A list of sources to automatically install if they're not already installed. Example: { "rust_analyzer@nightly", "sumneko_lua" }
+    -- A list of sources to install if they're not already installed.
     -- This setting has no relation with the `automatic_installation` setting.
     ensure_installed = {},
+    -- Run `require("null-ls").setup`.
+    -- Will automatically install masons tools based on selected sources in `null-ls`.
+    automatic_installation = false,
 }
 ```
 
@@ -96,13 +100,13 @@ local DEFAULT_SETTINGS = {
 The `setup_handlers()` function provides a dynamic way of setting up sources and any other needed logic, It can also do that during runtime.
 
 ```lua
-  local null_ls = require 'null-ls'
+local null_ls = require 'null-ls'
 
 require ('mason-null-ls').setup({
-  ensure_installed = {'stylua', 'jq'}
+    ensure_installed = {'stylua', 'jq'}
 })
   
-  require 'mason-null-ls'.setup_handlers {
+require 'mason-null-ls'.setup_handlers {
     function(source_name)
       -- all sources with no handler get passed here
     end,
@@ -112,10 +116,10 @@ require ('mason-null-ls').setup({
     jq = function()
       null_ls.register(null_ls.builtins.formatting.jq)
     end
-  }
+}
 
-  -- will setup any installed and configured sources above
-  null_ls.setup()
+-- will setup any installed and configured sources above
+null_ls.setup()
 ```
 
 

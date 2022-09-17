@@ -16,6 +16,7 @@ Feel free to create an issue or PR with a source you would like available immedi
 ## Dependencies
 
 - [mason.nvim](https://github.com/williamboman/mason.nvim.git)
+- [masdon-tools-installer](https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim.git)
 - [null-ls.nvim](https://github.com/jose-elias-alvarez/null-ls.nvim.git)
 - Neovim >0.7
 

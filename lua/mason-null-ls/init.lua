@@ -24,6 +24,10 @@ function M.setup(config)
 		require('mason-null-ls.ensure_installed')()
 	end
 
+	if settings.current.automatic_installation then
+		require('mason-null-ls.automatic_installation')()
+	end
+
 	require('mason-null-ls.api.command')
 end
 

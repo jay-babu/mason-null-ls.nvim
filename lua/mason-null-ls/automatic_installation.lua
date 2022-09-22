@@ -76,9 +76,17 @@ return function()
 			-- -@param pkg Package
 			function(pkg)
 				if not pkg:is_installed() then
+                    vim.notify(("[mason-null-ls] automatically installing %s"):format(pkg.name))
 					pkg:install({
 						version = version,
-					})
+                    }):once(
+                        'closed',
+                        vim.schedule_wrap(function()
+                            if pkg:is_installed() then
+                                vim.notify(("[mason-null-ls] %s was automatically installed"):format(pkg.name))
+                            end
+                        end)
+                    )
 				end
 			end
 		)

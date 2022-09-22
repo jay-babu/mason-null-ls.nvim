@@ -15,11 +15,11 @@ end
 
 local function auto_get_packages()
 	local sources = {}
-	sources = vim.tbl_deep_extend('force', sources, vim.tbl_keys(require('null-ls.builtins').diagnostics))
-	sources = vim.tbl_deep_extend('force', sources, vim.tbl_keys(require('null-ls.builtins').formatting))
-	sources = vim.tbl_deep_extend('force', sources, vim.tbl_keys(require('null-ls.builtins').code_actions))
-	sources = vim.tbl_deep_extend('force', sources, vim.tbl_keys(require('null-ls.builtins').completion))
-	sources = vim.tbl_deep_extend('force', sources, vim.tbl_keys(require('null-ls.builtins').hover))
+	sources = vim.list_extend(sources, vim.tbl_keys(require('null-ls.builtins').diagnostics))
+	sources = vim.list_extend(sources, vim.tbl_keys(require('null-ls.builtins').formatting))
+	sources = vim.list_extend(sources, vim.tbl_keys(require('null-ls.builtins').code_actions))
+	sources = vim.list_extend(sources, vim.tbl_keys(require('null-ls.builtins').completion))
+	sources = vim.list_extend(sources, vim.tbl_keys(require('null-ls.builtins').hover))
 	local tools = removeArrayDuplicates(sources)
 	return tools
 end

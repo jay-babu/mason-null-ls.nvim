@@ -17,8 +17,8 @@ It is recommended to use this extension if you use `mason.nvim` and `null-ls`.
 # Requirements
 
 -   neovim `>= 0.7.0`
--   `mason.nvim`
--   `null-ls.nvim`
+-   [`mason.nvim`](https://github.com/williamboman/mason.nvim)
+-   [`null-ls.nvim`](https://github.com/jose-elias-alvarez/null-ls.nvim)
 
 
 # Installation

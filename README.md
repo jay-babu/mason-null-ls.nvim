@@ -131,10 +131,12 @@ null_ls.setup()
 | blade                                                                                                                                 | `blade_formatter`      |
 | bzl                                                                                                                                   | `buildifier`           |
 | c cpp                                                                                                                                 | `cpplint`              |
-| cs                                                                                                                                    | `csharpier`            |
 | c cpp cs java cuda                                                                                                                    | `clang_format`         |
+| clj                                                                                                                                   | `joker`                |
+| cs                                                                                                                                    | `csharpier`            |
 | django jinja.html htmldjango                                                                                                          | `djlint`               |
 | dockerfile                                                                                                                            | `hadolint`             |
+| elm                                                                                                                                   | `elm_format`           |
 | eruby                                                                                                                                 | `erb_lint`             |
 | gitcommit                                                                                                                             | `gitlint`              |
 | go                                                                                                                                    | `gofumpt`              |
@@ -145,6 +147,7 @@ null_ls.setup()
 | go                                                                                                                                    | `revive`               |
 | go                                                                                                                                    | `staticcheck`          |
 | haml                                                                                                                                  | `haml_lint`            |
+| javascript typescript                                                                                                                 | `rome`                 |
 | javascript javascriptreact typescript typescriptreact                                                                                 | `xo`                   |
 | javascript javascriptreact typescript typescriptreact vue                                                                             | `eslint_d`             |
 | javascript javascriptreact typescript typescriptreact vue css scss less html json jsonc yaml markdown markdown.mdx graphql handlebars | `prettier`             |

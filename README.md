@@ -190,7 +190,7 @@ null_ls.setup()
 | yaml                                                                                                                                  | `actionlint`           |
 | yaml                                                                                                                                  | `yamlfmt`              |
 | yaml                                                                                                                                  | `yamllint`             |
-| yaml Json                                                                                                                             | `cfn_lint`             |
+| yaml json                                                                                                                             | `cfn_lint`             |
 |                                                                                                                                       | `codespell`            |
 |                                                                                                                                       | `cspell`               |
 |                                                                                                                                       | `editorconfig_checker` |

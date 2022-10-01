@@ -153,6 +153,7 @@ null_ls.setup()
 | javascript javascriptreact typescript typescriptreact vue css scss less html json jsonc yaml markdown markdown.mdx graphql handlebars | `prettier`             |
 | javascript javascriptreact typescript typescriptreact vue css scss less html json jsonc yaml markdown markdown.mdx graphql handlebars | `prettierd`            |
 | jinja.html htmldjango                                                                                                                 | `curlylint`            |
+| json                                                                                                                                  | `fixjson`              |
 | json                                                                                                                                  | `jq`                   |
 | kotlin                                                                                                                                | `ktlint`               |
 | lua                                                                                                                                   | `luacheck`             |
@@ -161,6 +162,7 @@ null_ls.setup()
 | markdown                                                                                                                              | `alex`                 |
 | markdown                                                                                                                              | `markdownlint`         |
 | markdown                                                                                                                              | `write_good`           |
+| markdown org                                                                                                                          | `cbfmt`                |
 | markdown tex                                                                                                                          | `proselint`            |
 | markdown tex asciidoc                                                                                                                 | `vale`                 |
 | php                                                                                                                                   | `phpcbf`               |
@@ -178,13 +180,18 @@ null_ls.setup()
 | ruby                                                                                                                                  | `rubocop`              |
 | ruby                                                                                                                                  | `standardrb`           |
 | sh                                                                                                                                    | `shellcheck`           |
+| sh                                                                                                                                    | `shellharden`          |
 | sh                                                                                                                                    | `shfmt`                |
 | solidity                                                                                                                              | `solhint`              |
 | sql                                                                                                                                   | `sqlfluff`             |
+| sql                                                                                                                                   | `sql_formatter`        |
+| toml                                                                                                                                  | `taplo`                |
 | vim                                                                                                                                   | `vint`                 |
 | yaml                                                                                                                                  | `actionlint`           |
+| yaml                                                                                                                                  | `yamlfmt`              |
 | yaml                                                                                                                                  | `yamllint`             |
-| yaml Json                                                                                                                             | `cfn-lint`             |
+| yaml Json                                                                                                                             | `cfn_lint`             |
+|                                                                                                                                       | `codespell`            |
 |                                                                                                                                       | `cspell`               |
 |                                                                                                                                       | `editorconfig_checker` |
 |                                                                                                                                       | `misspell`             |

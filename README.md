@@ -128,6 +128,7 @@ null_ls.setup()
 
 | Filetype                                                                                                                              | Source name            |
 |---------------------------------------------------------------------------------------------------------------------------------------|------------------------|
+| blade                                                                                                                                 | `blade_formatter`      |
 | bzl                                                                                                                                   | `buildifier`           |
 | c cpp                                                                                                                                 | `cpplint`              |
 | django jinja.html htmldjango                                                                                                          | `djlint`               |
@@ -153,6 +154,7 @@ null_ls.setup()
 | markdown                                                                                                                              | `write_good`           |
 | markdown tex                                                                                                                          | `proselint`            |
 | markdown tex asciidoc                                                                                                                 | `vale`                 |
+| php                                                                                                                                   | `phpcbf`               |
 | php                                                                                                                                   | `psalm`                |
 | proto                                                                                                                                 | `buf`                  |
 | python                                                                                                                                | `autopep8`             |

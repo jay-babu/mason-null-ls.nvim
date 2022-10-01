@@ -155,10 +155,15 @@ null_ls.setup()
 | markdown tex asciidoc                                                                                                                 | `vale`                 |
 | php                                                                                                                                   | `psalm`                |
 | proto                                                                                                                                 | `buf`                  |
+| python                                                                                                                                | `autopep8`             |
+| python                                                                                                                                | `black`                |
+| python                                                                                                                                | `blue`                 |
 | python                                                                                                                                | `flake8`               |
+| python                                                                                                                                | `isort`                |
 | python                                                                                                                                | `mypy`                 |
 | python                                                                                                                                | `pylint`               |
 | python                                                                                                                                | `vulture`              |
+| python                                                                                                                                | `yapf`                 |
 | ruby                                                                                                                                  | `rubocop`              |
 | ruby                                                                                                                                  | `standardrb`           |
 | sh                                                                                                                                    | `shellcheck`           |

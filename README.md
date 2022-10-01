@@ -131,6 +131,8 @@ null_ls.setup()
 | blade                                                                                                                                 | `blade_formatter`      |
 | bzl                                                                                                                                   | `buildifier`           |
 | c cpp                                                                                                                                 | `cpplint`              |
+| cs                                                                                                                                    | `csharpier`            |
+| c cpp cs java cuda                                                                                                                    | `clang_format`         |
 | django jinja.html htmldjango                                                                                                          | `djlint`               |
 | dockerfile                                                                                                                            | `hadolint`             |
 | eruby                                                                                                                                 | `erb_lint`             |

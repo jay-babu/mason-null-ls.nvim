@@ -126,48 +126,50 @@ null_ls.setup()
 # Available Null-ls sources
 
 
-| Filetype                                                  | Source name            |
-|-----------------------------------------------------------|------------------------|
-| bzl                                                       | `buildifier`           |
-| c cpp                                                     | `cpplint`              |
-| django jinja.html htmldjango                              | `djlint`               |
-| dockerfile                                                | `hadolint`             |
-| eruby                                                     | `erb_lint`             |
-| gitcommit                                                 | `gitlint`              |
-| go                                                        | `golangci_lint`        |
-| go                                                        | `revive`               |
-| go                                                        | `staticcheck`          |
-| haml                                                      | `haml_lint`            |
-| javascript javascriptreact typescript typescriptreact     | `xo`                   |
-| javascript javascriptreact typescript typescriptreact vue | `eslint_d`             |
-| jinja.html htmldjango                                     | `curlylint`            |
-| json                                                      | `jq`                   |
-| kotlin                                                    | `ktlint`               |
-| lua                                                       | `luacheck`             |
-| lua                                                       | `selene`               |
-| lua                                                       | `stylua`               |
-| markdown                                                  | `alex`                 |
-| markdown                                                  | `markdownlint`         |
-| markdown                                                  | `write_good`           |
-| markdown tex                                              | `proselint`            |
-| markdown tex asciidoc                                     | `vale`                 |
-| php                                                       | `psalm`                |
-| proto                                                     | `buf`                  |
-| python                                                    | `flake8`               |
-| python                                                    | `mypy`                 |
-| python                                                    | `pylint`               |
-| python                                                    | `vulture`              |
-| ruby                                                      | `rubocop`              |
-| ruby                                                      | `standardrb`           |
-| sh                                                        | `shellcheck`           |
-| sh                                                        | `shfmt`                |
-| solidity                                                  | `solhint`              |
-| sql                                                       | `sqlfluff`             |
-| vim                                                       | `vint`                 |
-| yaml                                                      | `actionlint`           |
-| yaml                                                      | `yamllint`             |
-| yaml Json                                                 | `cfn-lint`             |
-|                                                           | `cspell`               |
-|                                                           | `editorconfig_checker` |
-|                                                           | `misspell`             |
-|                                                           | `textlint`             |
+| Filetype                                                                                                                              | Source name            |
+|---------------------------------------------------------------------------------------------------------------------------------------|------------------------|
+| bzl                                                                                                                                   | `buildifier`           |
+| c cpp                                                                                                                                 | `cpplint`              |
+| django jinja.html htmldjango                                                                                                          | `djlint`               |
+| dockerfile                                                                                                                            | `hadolint`             |
+| eruby                                                                                                                                 | `erb_lint`             |
+| gitcommit                                                                                                                             | `gitlint`              |
+| go                                                                                                                                    | `golangci_lint`        |
+| go                                                                                                                                    | `revive`               |
+| go                                                                                                                                    | `staticcheck`          |
+| haml                                                                                                                                  | `haml_lint`            |
+| javascript javascriptreact typescript typescriptreact                                                                                 | `xo`                   |
+| javascript javascriptreact typescript typescriptreact vue                                                                             | `eslint_d`             |
+| javascript javascriptreact typescript typescriptreact vue css scss less html json jsonc yaml markdown markdown.mdx graphql handlebars | `prettier`             |
+| javascript javascriptreact typescript typescriptreact vue css scss less html json jsonc yaml markdown markdown.mdx graphql handlebars | `prettierd`            |
+| jinja.html htmldjango                                                                                                                 | `curlylint`            |
+| json                                                                                                                                  | `jq`                   |
+| kotlin                                                                                                                                | `ktlint`               |
+| lua                                                                                                                                   | `luacheck`             |
+| lua                                                                                                                                   | `selene`               |
+| lua                                                                                                                                   | `stylua`               |
+| markdown                                                                                                                              | `alex`                 |
+| markdown                                                                                                                              | `markdownlint`         |
+| markdown                                                                                                                              | `write_good`           |
+| markdown tex                                                                                                                          | `proselint`            |
+| markdown tex asciidoc                                                                                                                 | `vale`                 |
+| php                                                                                                                                   | `psalm`                |
+| proto                                                                                                                                 | `buf`                  |
+| python                                                                                                                                | `flake8`               |
+| python                                                                                                                                | `mypy`                 |
+| python                                                                                                                                | `pylint`               |
+| python                                                                                                                                | `vulture`              |
+| ruby                                                                                                                                  | `rubocop`              |
+| ruby                                                                                                                                  | `standardrb`           |
+| sh                                                                                                                                    | `shellcheck`           |
+| sh                                                                                                                                    | `shfmt`                |
+| solidity                                                                                                                              | `solhint`              |
+| sql                                                                                                                                   | `sqlfluff`             |
+| vim                                                                                                                                   | `vint`                 |
+| yaml                                                                                                                                  | `actionlint`           |
+| yaml                                                                                                                                  | `yamllint`             |
+| yaml Json                                                                                                                             | `cfn-lint`             |
+|                                                                                                                                       | `cspell`               |
+|                                                                                                                                       | `editorconfig_checker` |
+|                                                                                                                                       | `misspell`             |
+|                                                                                                                                       | `textlint`             |

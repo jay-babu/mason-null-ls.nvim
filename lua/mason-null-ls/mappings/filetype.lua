@@ -73,13 +73,13 @@ return {
   -- csh = {
   --   "beautysh"
   -- },
-  -- css = {
-  --   "stylelint",
-  --   "prettier",
-  --   "prettier_d_slim",
-  --   "prettierd",
-  --   "stylelint"
-  -- },
+  css = {
+    "stylelint",
+    "prettier",
+    "prettier_d_slim",
+    "prettierd",
+    "stylelint"
+  },
   -- cuda = {
   --   "clang_format"
   -- },

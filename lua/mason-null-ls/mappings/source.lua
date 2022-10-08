@@ -15,6 +15,7 @@ M.null_ls_to_package = {
 	['cbfmt'] = 'cbfmt',
 	['cfn_lint'] = 'cfn-lint',
 	['clang_format'] = 'clang-format',
+	['cmake_format'] = 'cmakelang',
 	['codespell'] = 'codespell',
 	['cpplint'] = 'cpplint',
 	['csharpier'] = 'csharpier',

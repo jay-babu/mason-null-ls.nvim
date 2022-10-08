@@ -76,9 +76,7 @@ return {
   css = {
     "stylelint",
     "prettier",
-    "prettier_d_slim",
     "prettierd",
-    "stylelint"
   },
   -- cuda = {
   --   "clang_format"

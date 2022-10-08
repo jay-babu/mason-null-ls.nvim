@@ -48,10 +48,10 @@ return {
   --   "cljstyle",
   --   "zprint"
   -- },
-  -- cmake = {
-  --   "cmake_format",
-  --   "gersemi"
-  -- },
+  cmake = {
+    "cmake_format",
+    "gersemi"
+  },
   cpp = {
     --   "clang_check",
     --   "cppcheck",

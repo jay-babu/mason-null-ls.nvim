@@ -28,6 +28,7 @@ M.null_ls_to_package = {
 	['eslint_d'] = 'eslint_d',
 	['fixjson'] = 'fixjson',
 	['flake8'] = 'flake8',
+	['gersemi'] = 'gersemi',
 	['gitlint'] = 'gitlint',
 	['gofumpt'] = 'gofumpt',
 	['goimports'] = 'goimports',

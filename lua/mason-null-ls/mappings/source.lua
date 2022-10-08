@@ -62,6 +62,7 @@ M.null_ls_to_package = {
 	['standardrb'] = 'standardrb',
 	['staticcheck'] = 'staticcheck',
 	['stylua'] = 'stylua',
+	['stylelint'] = 'stylelint-lsp',
 	['taplo'] = 'taplo',
 	['textlint'] = 'textlint',
 	['vale'] = 'vale',

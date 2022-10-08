@@ -90,6 +90,8 @@ local DEFAULT_SETTINGS = {
     ensure_installed = {},
     -- Run `require("null-ls").setup`.
     -- Will automatically install masons tools based on selected sources in `null-ls`.
+    -- Can also be an exclusion list.
+    -- Example: `automatic_installation = { exclude = { "rust_analyzer", "solargraph" } }`
     automatic_installation = false,
 }
 ```
@@ -105,7 +107,7 @@ local null_ls = require 'null-ls'
 require ('mason-null-ls').setup({
     ensure_installed = {'stylua', 'jq'}
 })
-  
+
 require 'mason-null-ls'.setup_handlers {
     function(source_name)
       -- all sources with no handler get passed here

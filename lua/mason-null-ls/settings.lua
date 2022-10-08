@@ -13,7 +13,7 @@ local DEFAULT_SETTINGS = {
 	--   - false: Servers are not automatically installed.
 	--   - true: All servers set up via lspconfig are automatically installed.
 	--   - { exclude: string[] }: All servers set up via mason-null-ls, except the ones provided in the list, are automatically installed.
-	--       Example: automatic_installation = { exclude = { "rust_analyzer", "solargraph" } }
+	--       Example: automatic_installation = { exclude = { "stylua", "eslint", } }
 	automatic_installation = false,
 }
 

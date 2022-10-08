@@ -13,9 +13,9 @@ return {
   -- asm = {
   --   "asmfmt"
   -- },
-  -- bash = {
-  --   "beautysh"
-  -- },
+  bash = {
+    "beautysh"
+  },
   -- beancount = {
   --   "bean_format"
   -- },

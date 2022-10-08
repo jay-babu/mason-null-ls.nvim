@@ -1,17 +1,5 @@
+local _ = require('mason-core.functional')
 local settings = require('mason-null-ls.settings')
-
-local function removeArrayDuplicates(arr)
-	if arr == nil then
-		return nil
-	end
-
-	local table = {}
-	for _, item in ipairs(arr) do
-		table[item] = true
-	end
-
-	return vim.tbl_keys(table)
-end
 
 local function auto_get_packages()
 	local sources = {}
@@ -20,7 +8,7 @@ local function auto_get_packages()
 	sources = vim.list_extend(sources, vim.tbl_keys(require('null-ls.builtins').code_actions))
 	sources = vim.list_extend(sources, vim.tbl_keys(require('null-ls.builtins').completion))
 	sources = vim.list_extend(sources, vim.tbl_keys(require('null-ls.builtins').hover))
-	local tools = removeArrayDuplicates(sources)
+	local tools = _.uniq_by(_.identity, sources)
 	return tools
 end
 

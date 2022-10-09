@@ -48,10 +48,10 @@ return {
   --   "cljstyle",
   --   "zprint"
   -- },
-  -- cmake = {
-  --   "cmake_format",
-  --   "gersemi"
-  -- },
+  cmake = {
+    "cmake_format",
+    "gersemi"
+  },
   cpp = {
     --   "clang_check",
     --   "cppcheck",
@@ -73,13 +73,11 @@ return {
   -- csh = {
   --   "beautysh"
   -- },
-  -- css = {
-  --   "stylelint",
-  --   "prettier",
-  --   "prettier_d_slim",
-  --   "prettierd",
-  --   "stylelint"
-  -- },
+  css = {
+    "stylelint",
+    "prettier",
+    "prettierd",
+  },
   -- cuda = {
   --   "clang_format"
   -- },

@@ -7,6 +7,7 @@ M.null_ls_to_package = {
 	['actionlint'] = 'actionlint',
 	['alex'] = 'alex',
 	['autopep8'] = 'autopep8',
+	['beautysh'] = 'beautysh',
 	['black'] = 'black',
 	['blade_formatter'] = 'blade-formatter',
 	['blue'] = 'blue',

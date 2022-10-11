@@ -51,6 +51,7 @@ M.null_ls_to_package = {
 	['prettierd'] = 'prettierd',
 	['proselint'] = 'proselint',
 	['psalm'] = 'psalm',
+	['pylama'] = 'pylama',
 	['pylint'] = 'pylint',
 	['revive'] = 'revive',
 	['rome'] = 'rome',

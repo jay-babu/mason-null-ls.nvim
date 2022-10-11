@@ -383,7 +383,7 @@ return {
     "mypy",
     --   "pycodestyle",
     --   "pydocstyle",
-    --   "pylama",
+    "pylama",
     "pylint",
     --   "pyproject_flake8",
     --   "semgrep",

@@ -355,7 +355,7 @@ return {
     --   "phpstan",
     "psalm",
     --   "phpcbf",
-    --   "phpcsfixer",
+      "phpcsfixer",
     --   "pint",
   },
   -- prisma = {

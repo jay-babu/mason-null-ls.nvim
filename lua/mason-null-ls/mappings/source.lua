@@ -47,6 +47,7 @@ M.null_ls_to_package = {
 	['misspell'] = 'misspell',
 	['mypy'] = 'mypy',
 	['phpcbf'] = 'phpcbf',
+	['phpcsfixer'] = 'php-cs-fixer',
 	['prettier'] = 'prettier',
 	['prettierd'] = 'prettierd',
 	['proselint'] = 'proselint',

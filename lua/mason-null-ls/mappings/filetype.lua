@@ -162,10 +162,10 @@ return {
     --   "semgrep",
     "staticcheck",
     --   "gofmt",
-    --   "gofumpt",
-    --   "goimports",
-    --   "goimports_reviser",
-    --   "golines"
+      "gofumpt",
+      "goimports",
+      "goimports_reviser",
+      "golines"
   },
   -- graphql = {
   --   "prettier",
@@ -221,7 +221,7 @@ return {
     --   "standardjs",
     "xo",
     --   "deno_fmt",
-    --   "dprint",
+      "dprint",
     --   "eslint",
     --   "prettier",
     --   "prettier_d_slim",
@@ -429,10 +429,10 @@ return {
     --   "rufo",
     "standardrb",
   },
-  -- rust = {
-  --   "dprint",
+  rust = {
+    "dprint",
   --   "rustfmt",
-  -- },
+  },
   -- sass = {
   --   "stylelint",
   --   "stylelint",
@@ -499,10 +499,10 @@ return {
   -- tf = {
   --   "terraform_fmt",
   -- },
-  -- toml = {
-  --   "dprint",
+  toml = {
+    "dprint",
   --   "taplo",
-  -- },
+  },
   -- twig = {
   --   "twigcs",
   -- },
@@ -531,7 +531,7 @@ return {
     --   "tsc",
     "xo",
     --   "deno_fmt",
-    --   "dprint",
+      "dprint",
     --   "eslint",
     --   "prettier",
     --   "prettier_d_slim",

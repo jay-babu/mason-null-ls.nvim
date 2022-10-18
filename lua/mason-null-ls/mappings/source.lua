@@ -23,6 +23,7 @@ M.null_ls_to_package = {
 	['cspell'] = 'cspell',
 	['curlylint'] = 'curlylint',
 	['djlint'] = 'djlint',
+	['dprint'] = 'dprint',
 	['editorconfig_checker'] = 'editorconfig-checker',
 	['elm_format'] = 'elm-format',
 	['erb_lint'] = 'erb-lint',

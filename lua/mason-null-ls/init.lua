@@ -31,7 +31,7 @@ function M.setup(config)
 	require('mason-null-ls.api.command')
 end
 
----@param handlers table<string, fun(source_name: string)>
+---@param handlers table<string, fun(source_name: string, methods: string[])>
 function M.setup_handlers(handlers)
 	local Optional = require('mason-core.optional')
 	local source_mappings = require('mason-null-ls.mappings.source')
@@ -58,7 +58,17 @@ function M.setup_handlers(handlers)
 		log.fmt_trace('Checking handler for %s', source_name)
 		Optional.of_nilable(handlers[source_name]):or_(_.always(default_handler)):if_present(function(handler)
 			log.fmt_trace('Calling handler for %s', source_name)
-			local ok, err = pcall(handler, source_name)
+
+			local supported_methods = _.filter_map(function(method)
+				local ok, _ = pcall(require, string.format('null-ls.builtins.%s.%s', method, source_name))
+				if ok then
+					return Optional.of(method)
+				else
+					return Optional.empty()
+				end
+			end, { 'diagnostics', 'formatting', 'code_actions', 'completion', 'hover' })
+
+			local ok, err = pcall(handler, source_name, supported_methods)
 			if not ok then
 				vim.notify(err, vim.log.levels.ERROR)
 			end

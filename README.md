@@ -112,10 +112,10 @@ require 'mason-null-ls'.setup_handlers {
     function(source_name)
       -- all sources with no handler get passed here
     end,
-    stylua = function()
+    stylua = function(source_name, methods)
       null_ls.register(null_ls.builtins.formatting.stylua)
     end,
-    jq = function()
+    jq = function(source_name, methods)
       null_ls.register(null_ls.builtins.formatting.jq)
     end
 }

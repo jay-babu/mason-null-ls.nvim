@@ -3,6 +3,18 @@ local _ = require('mason-core.functional')
 
 local M = {}
 
+-- Currently this only needs to be evaluated for the same list passed in.
+-- @param source string
+-- @param types string[]
+local default_setup = function(source, types)
+	local settings = require('mason-null-ls.settings')
+	if settings.current.automatic_setup then
+		local user_types = settings.current.automatic_setup.types or {}
+		local user_source_types = user_types[source]
+		require('mason-null-ls.automatic_setup')(source, user_source_types or types)
+	end
+end
+
 ---@param config MasonNullLsSettings | nil
 function M.setup(config)
 	local settings = require('mason-null-ls.settings')
@@ -33,13 +45,13 @@ end
 
 ---@param handlers table<string, fun(source_name: string, methods: string[])>
 function M.setup_handlers(handlers)
+	handlers = handlers or {}
 	local Optional = require('mason-core.optional')
 	local source_mappings = require('mason-null-ls.mappings.source')
 	local registry = require('mason-registry')
 	local notify = require('mason-core.notify')
 
-	local default_handler = Optional.of_nilable(handlers[1])
-
+	local default_handler = Optional.of_nilable(handlers[1]):or_(_.always(Optional.of_nilable(default_setup)))
 	_.each(function(handler)
 		if type(handler) == 'string' and not source_mappings.null_ls_to_package[handler] then
 			notify(
@@ -59,7 +71,7 @@ function M.setup_handlers(handlers)
 		Optional.of_nilable(handlers[source_name]):or_(_.always(default_handler)):if_present(function(handler)
 			log.fmt_trace('Calling handler for %s', source_name)
 
-			local supported_methods = _.filter_map(function(method)
+			local types = _.filter_map(function(method)
 				local ok, _ = pcall(require, string.format('null-ls.builtins.%s.%s', method, source_name))
 				if ok then
 					return Optional.of(method)
@@ -68,7 +80,7 @@ function M.setup_handlers(handlers)
 				end
 			end, { 'diagnostics', 'formatting', 'code_actions', 'completion', 'hover' })
 
-			local ok, err = pcall(handler, source_name, supported_methods)
+			local ok, err = pcall(handler, source_name, types)
 			if not ok then
 				vim.notify(err, vim.log.levels.ERROR)
 			end

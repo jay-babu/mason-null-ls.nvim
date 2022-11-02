@@ -93,13 +93,42 @@ local DEFAULT_SETTINGS = {
     -- Can also be an exclusion list.
     -- Example: `automatic_installation = { exclude = { "rust_analyzer", "solargraph" } }`
     automatic_installation = false,
+
+	-- Whether sources that are installed in mason should be automatically set up in null-ls.
+	-- Removes the need to set up null-ls manually.
+	-- Can either be:
+	-- 	- false: Null-ls is not automatically registered.
+	-- 	- true: Null-ls is automatically registered.
+	-- 	- { types = { SOURCE_NAME = {TYPES} } }. Allows overriding default configuration.
+	-- 	Ex: { types = { eslint_d = {'formatting'} } }
+	automatic_setup = false,
 }
 ```
+
+# Automatic Setup Usage
+
+Automatic Setup is a need feature that removes the need to configure `null-ls` for supported sources.
+Sources found installed in `mason` will automatically be setup for null-ls.
+
+## Example Config
+
+```lua
+require("mason").setup()
+require("mason-null-ls").setup({
+    automatic_setup = true,
+})
+```
+
+See the Default Configuration section to understand how the default dap configs can be overriden.
 
 
 # Setup handlers usage
 
 The `setup_handlers()` function provides a dynamic way of setting up sources and any other needed logic, It can also do that during runtime.
+
+**NOTE:** When setting `automatic_setup = true`, the handler function needs to be called at a minimum like:
+`require 'mason-null-ls'.setup_handlers()`. When passing in a custom handler function for the the default or a source,
+then the automatic_setup function one won't be invoked. See below to keep original functionality inside the custom handler.
 
 ```lua
 local null_ls = require 'null-ls'
@@ -109,8 +138,10 @@ require ('mason-null-ls').setup({
 })
 
 require 'mason-null-ls'.setup_handlers {
-    function(source_name)
+    function(source_name, methods)
       -- all sources with no handler get passed here
+      -- Keep original functionality of `automatic_setup = true`
+      require('mason-null-ls.automatic_setup')(source_name, methods)
     end,
     stylua = function(source_name, methods)
       null_ls.register(null_ls.builtins.formatting.stylua)

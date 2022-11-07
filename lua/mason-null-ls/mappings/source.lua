@@ -59,6 +59,7 @@ M.null_ls_to_package = {
 	['revive'] = 'revive',
 	['rome'] = 'rome',
 	['rubocop'] = 'rubocop',
+	['rustfmt'] = 'rustfmt',
 	['selene'] = 'selene',
 	['shellcheck'] = 'shellcheck',
 	['shellharden'] = 'shellharden',

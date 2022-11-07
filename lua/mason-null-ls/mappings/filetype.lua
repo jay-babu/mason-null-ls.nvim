@@ -430,7 +430,7 @@ return {
         },
         rust = {
                 "dprint",
-                --   "rustfmt",
+                "rustfmt",
         },
         -- sass = {
         --   "stylelint",

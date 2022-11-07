@@ -201,6 +201,7 @@ null_ls.setup()
 | php                                                                                                                                   | `phpcbf`               |
 | php                                                                                                                                   | `psalm`                |
 | proto                                                                                                                                 | `buf`                  |
+| proto                                                                                                                                 | `protolint`            |
 | python                                                                                                                                | `autopep8`             |
 | python                                                                                                                                | `black`                |
 | python                                                                                                                                | `blue`                 |

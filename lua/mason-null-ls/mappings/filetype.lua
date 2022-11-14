@@ -254,7 +254,7 @@ return {
         },
         json = {
                 "cfn-lint",
-                --   "jsonlint",
+                "jsonlint",
                 --   "spectral",
                 --   "deno_fmt",
                 --   "dprint",

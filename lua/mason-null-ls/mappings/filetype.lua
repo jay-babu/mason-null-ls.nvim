@@ -384,7 +384,7 @@ return {
                 --   "pydocstyle",
                 "pylama",
                 "pylint",
-                --   "pyproject_flake8",
+                "pyproject_flake8",
                 --   "semgrep",
                 "vulture",
                 --   "autopep8",

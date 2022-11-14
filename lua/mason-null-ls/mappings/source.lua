@@ -42,6 +42,7 @@ M.null_ls_to_package = {
 	['isort'] = 'isort',
 	['joker'] = 'joker',
 	['jq'] = 'jq',
+	['jsonlint'] = 'jsonlint',
 	['ktlint'] = 'ktlint',
 	['luacheck'] = 'luacheck',
 	['markdownlint'] = 'markdownlint',

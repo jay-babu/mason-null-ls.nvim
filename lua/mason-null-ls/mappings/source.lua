@@ -56,6 +56,7 @@ M.null_ls_to_package = {
 	['psalm'] = 'psalm',
 	['pylama'] = 'pylama',
 	['pylint'] = 'pylint',
+	['pyproject_flake8'] = 'pyproject-flake8',
 	['revive'] = 'revive',
 	['rome'] = 'rome',
 	['rubocop'] = 'rubocop',

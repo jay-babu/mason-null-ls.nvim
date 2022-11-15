@@ -146,7 +146,7 @@ return {
         --   "gdformat"
         -- },
         gitcommit = {
-                --   "commitlint",
+                "commitlint",
                 "gitlint"
         },
         -- gitrebase = {

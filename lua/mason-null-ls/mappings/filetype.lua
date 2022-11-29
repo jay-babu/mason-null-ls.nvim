@@ -22,9 +22,9 @@ return {
         -- bib = {
         --   "bibclean"
         -- },
-        -- blade = {
-        --   "blade_formatter"
-        -- },
+        blade = {
+                "blade_formatter"
+        },
         bzl = {
                 "buildifier"
         },
@@ -34,15 +34,15 @@ return {
                 "cpplint",
                 --   "gccdiag",
                 --   "astyle",
-                --   "clang_format",
+                "clang_format",
                 --   "uncrustify"
         },
         -- cabal = {
         --   "cabal_fmt"
         -- },
-        -- clj = {
-        --   "joker"
-        -- },
+        clj = {
+                "joker"
+        },
         -- clojure = {
         --   "clj_kondo",
         --   "cljstyle",
@@ -58,29 +58,29 @@ return {
                 "cpplint",
                 --   "gccdiag",
                 --   "astyle",
-                --   "clang_format",
+                "clang_format",
                 --   "uncrustify"
         },
         -- crystal = {
         --   "crystal_format"
         -- },
-        -- cs = {
+        cs = {
         --   "astyle",
-        --   "clang_format",
-        --   "csharpier",
+                "clang_format",
+                "csharpier",
         --   "uncrustify"
-        -- },
-        -- csh = {
-        --   "beautysh"
-        -- },
+        },
+        csh = {
+                "beautysh"
+        },
         css = {
-                "stylelint",
+                --   "stylelint",
                 "prettier",
                 "prettierd",
         },
-        -- cuda = {
-        --   "clang_format"
-        -- },
+        cuda = {
+                "clang_format"
+        },
         -- cue = {
         --   "cue_fmt",
         --   "cue_fmt"
@@ -109,9 +109,9 @@ return {
         --   "mix",
         --   "surface"
         -- },
-        -- elm = {
-        --   "elm_format"
-        -- },
+        elm = {
+                "elm_format"
+        },
         -- epuppet = {
         --   "puppet_lint",
         --   "puppet_lint"
@@ -167,22 +167,22 @@ return {
                 "goimports_reviser",
                 "golines"
         },
-        -- graphql = {
-        --   "prettier",
-        --   "prettier_d_slim",
-        --   "prettierd"
-        -- },
+        graphql = {
+                "prettier",
+                --   "prettier_d_slim",
+                "prettierd"
+        },
         -- groovy = {
         --   "npm_groovy_lint"
         -- },
         haml = {
                 "haml_lint"
         },
-        -- handlebars = {
-        --   "prettier",
-        --   "prettier_d_slim",
-        --   "prettierd"
-        -- },
+        handlebars = {
+                "prettier",
+                --   "prettier_d_slim",
+                "prettierd"
+        },
         -- haskell = {
         --   "brittany",
         --   "fourmolu",
@@ -191,27 +191,27 @@ return {
         -- hcl = {
         --   "packer"
         -- },
-        -- html = {
-        --   "tidy",
-        --   "prettier",
-        --   "prettier_d_slim",
-        --   "prettierd",
-        --   "rustywind",
-        --   "tidy"
-        -- },
+        html = {
+                --   "tidy",
+                "prettier",
+                --   "prettier_d_slim",
+                "prettierd",
+                --   "rustywind",
+                --   "tidy"
+        },
         htmldjango = {
                 "curlylint",
                 "djlint",
                 --   "djhtml",
         },
-        -- java = {
+        java = {
         --   "semgrep",
         --   "astyle",
-        --   "clang_format",
+                "clang_format",
         --   "google_java_format",
         --   "npm_groovy_lint",
         --   "uncrustify"
-        -- },
+        },
         javascript = {
                 --   "eslint",
                 "eslint_d",
@@ -223,11 +223,11 @@ return {
                 --   "deno_fmt",
                 "dprint",
                 --   "eslint",
-                --   "prettier",
+                "prettier",
                 --   "prettier_d_slim",
                 --   "prettier_standard",
-                --   "prettierd",
-                --   "rome",
+                "prettierd",
+                "rome",
                 --   "rustywind",
                 --   "standardjs",
         },
@@ -238,12 +238,12 @@ return {
                 --   "standardjs",
                 "xo",
                 --   "deno_fmt",
-                --   "dprint",
+                "dprint",
                 --   "eslint",
-                --   "prettier",
+                "prettier",
                 --   "prettier_d_slim",
                 --   "prettier_standard",
-                --   "prettierd",
+                "prettierd",
                 --   "rustywind",
                 --   "standardjs",
         },
@@ -257,36 +257,35 @@ return {
                 "jsonlint",
                 --   "spectral",
                 --   "deno_fmt",
-                --   "dprint",
-                --   "fixjson",
-                --   "jq",
+                "dprint",
+                "fixjson",
+                "jq",
                 --   "json_tool",
-                --   "prettier",
+                "prettier",
                 --   "prettier_d_slim",
-                --   "prettierd",
+                "prettierd",
         },
-        -- jsonc = {
-        --   "deno_fmt",
-        --   "prettier",
-        --   "prettier_d_slim",
-        --   "prettierd",
-        -- },
+        jsonc = {
+                --   "deno_fmt",
+                "prettier",
+                --   "prettier_d_slim",
+                "prettierd",
+        },
         -- just = {
         --   "just",
         -- },
         kotlin = {
                 "ktlint",
         },
-        -- ksh = {
-        --   "beautysh",
-        -- },
-        -- less = {
-        --   "stylelint",
-        --   "prettier",
-        --   "prettier_d_slim",
-        --   "prettierd",
-        --   "stylelint",
-        -- },
+        ksh = {
+                "beautysh",
+        },
+        less = {
+                "prettier",
+                --   "prettier_d_slim",
+                "prettierd",
+                --   "stylelint",
+        },
         lua = {
                 --   "refactoring",
                 "luacheck",
@@ -298,22 +297,21 @@ return {
         --   "checkmake",
         -- },
         markdown = {
-                --   "proselint",
                 "alex",
                 "markdownlint",
                 --   "mdl",
-                --   "proselint",
+                "proselint",
                 "vale",
                 "write_good",
-                --   "cbfmt",
+                "cbfmt",
                 --   "deno_fmt",
-                --   "dprint",
+                "dprint",
                 --   "markdown_toc",
                 --   "mdformat",
                 --   "ocdc",
-                --   "prettier",
+                "prettier",
                 --   "prettier_d_slim",
-                --   "prettierd",
+                "prettierd",
                 --   "remark",
                 --   "terrafmt",
                 --   "dictionary",
@@ -335,9 +333,9 @@ return {
         --   "nixfmt",
         --   "nixpkgs_fmt",
         -- },
-        -- org = {
-        --   "cbfmt",
-        -- },
+        org = {
+                "cbfmt",
+        },
         -- pascal = {
         --   "ptop",
         -- },
@@ -350,13 +348,13 @@ return {
         -- },
         php = {
                 --   "php",
-                --   "phpcs",
-                --   "phpmd",
-                --   "phpstan",
+                "phpcs",
+                "phpmd",
+                "phpstan",
                 "psalm",
-                --   "phpcbf",
+                "phpcbf",
                 "phpcsfixer",
-                --   "pint",
+                "pint",
         },
         -- prisma = {
         --   "prismaFmt",
@@ -381,19 +379,20 @@ return {
                 "flake8",
                 "mypy",
                 --   "pycodestyle",
-                --   "pydocstyle",
+                "pydocstyle",
                 "pylama",
                 "pylint",
                 "pyproject_flake8",
                 --   "semgrep",
                 "vulture",
-                --   "autopep8",
-                --   "black",
-                --   "blue",
-                --   "isort",
-                --   "reorder_python_imports",
-                --   "usort",
-                --   "yapf",
+                "autopep8",
+                "black",
+                "blue",
+                "isort",
+                "reorder_python_imports",
+                "ruff",
+                "usort",
+                "yapf",
         },
         -- qml = {
         --   "qmllint",
@@ -416,12 +415,12 @@ return {
         --   "format_r",
         --   "styler",
         -- },
-        -- roslyn = {
-        --   "dprint",
-        -- },
-        -- rst = {
-        --   "rstcheck",
-        -- },
+        roslyn = {
+                "dprint",
+        },
+        rst = {
+                "rstcheck",
+        },
         ruby = {
                 "rubocop",
                 --   "semgrep",
@@ -439,17 +438,17 @@ return {
         -- scala = {
         --   "scalafmt",
         -- },
-        -- scss = {
-        --   "stylelint",
-        --   "prettier",
-        --   "prettier_d_slim",
-        --   "prettierd",
-        --   "stylelint",
-        -- },
+        scss = {
+                --   "stylelint",
+                "prettier",
+                --   "prettier_d_slim",
+                "prettierd",
+                --   "stylelint",
+        },
         sh = {
                 "shellcheck",
-                --   "beautysh",
-                --   "shellharden",
+                "beautysh",
+                "shellharden",
                 "shfmt",
                 --   "printenv",
         },
@@ -461,7 +460,7 @@ return {
         -- },
         sql = {
                 --   "pg_format",
-                --   "sql_formatter",
+                "sql_formatter",
                 "sqlfluff",
                 --   "sqlformat",
         },
@@ -477,9 +476,9 @@ return {
         -- swift = {
         --   "swiftformat",
         -- },
-        -- systemverilog = {
-        --   "verible_verilog_format",
-        -- },
+        systemverilog = {
+                "verible_verilog_format",
+        },
         -- teal = {
         --   "teal",
         -- },
@@ -500,11 +499,11 @@ return {
         -- },
         toml = {
                 "dprint",
-                --   "taplo",
+                "taplo",
         },
-        -- twig = {
-        --   "twigcs",
-        -- },
+        twig = {
+                "twigcs",
+        },
         typescript = {
                 --   "eslint",
                 "eslint_d",
@@ -514,12 +513,12 @@ return {
                 --   "tsc",
                 "xo",
                 --   "deno_fmt",
-                --   "dprint",
+                "dprint",
                 --   "eslint",
-                --   "prettier",
+                "prettier",
                 --   "prettier_d_slim",
-                --   "prettierd",
-                --   "rome",
+                "prettierd",
+                "rome",
                 --   "rustywind",
         },
         typescriptreact = {
@@ -532,23 +531,23 @@ return {
                 --   "deno_fmt",
                 "dprint",
                 --   "eslint",
-                --   "prettier",
+                "prettier",
                 --   "prettier_d_slim",
-                --   "prettierd",
+                "prettierd",
                 --   "rustywind",
         },
-        -- verilog = {
-        --   "verible_verilog_format",
-        -- },
+        verilog = {
+                "verible_verilog_format",
+        },
         vim = {
                 "vint",
         },
         vue = {
                 --   "eslint",
                 "eslint_d",
-                --   "prettier",
+                "prettier",
                 --   "prettier_d_slim",
-                --   "prettierd",
+                "prettierd",
                 --   "rustywind",
         },
         -- xml = {
@@ -560,10 +559,10 @@ return {
                 "cfn-lint",
                 --   "spectral",
                 "yamllint",
-                --   "prettier",
+                "prettier",
                 --   "prettier_d_slim",
-                --   "prettierd",
-                --   "yamlfmt",
+                "prettierd",
+                "yamlfmt",
         },
         -- ["yaml.ansible"] = {
         --   "ansiblelint",
@@ -571,8 +570,8 @@ return {
         -- zig = {
         --   "zigfmt",
         -- },
-        -- zsh = {
+        zsh = {
         --   "zsh",
-        --   "beautysh",
-        -- }
+                "beautysh",
+        }
 }

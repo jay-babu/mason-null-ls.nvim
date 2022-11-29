@@ -10,6 +10,7 @@
 -   translate between `null-ls` source names and `mason.nvim` package names (e.g. `haml_lint` <-> `haml-lint`)
 
 It is recommended to use this extension if you use `mason.nvim` and `null-ls`.
+Please read the whole README.md before jumping to [Setup](#setup).
 
 **Note: this plugin uses the `null-ls` source names in the APIs it exposes - not `mason.nvim` package names.
 
@@ -41,28 +42,9 @@ Plug 'jose-elias-alvarez/null-ls.nvim'
 Plug 'jayp0521/mason-null-ls.nvim'
 ```
 
-
-# Setup
-
-It's important that you set up the plugins in the following order:
-
-1. `mason.nvim`
-2. `null-ls`
-3. `mason-null-ls.nvim`
-
-Pay extra attention to this if you're using a plugin manager to load plugins for you, as there are no guarantees it'll
-load plugins in the correct order unless explicitly instructed to.
-
-```lua
-require("mason").setup()
-require("null-ls").setup()
-require("mason-null-ls").setup()
-```
-
-Refer to the [Configuration](#configuration) section for information about which settings are available.
-
-
 # Commands
+
+Available after calling `setup`.
 
 -   `:NullInstall [<source>...]` - installs the provided sources
 -   `:NullUninstall <source> ...` - uninstalls the provided sources
@@ -140,20 +122,59 @@ require ('mason-null-ls').setup({
 require 'mason-null-ls'.setup_handlers {
     function(source_name, methods)
       -- all sources with no handler get passed here
-      -- Keep original functionality of `automatic_setup = true`
-      require('mason-null-ls.automatic_setup')(source_name, methods)
     end,
     stylua = function(source_name, methods)
       null_ls.register(null_ls.builtins.formatting.stylua)
     end,
-    jq = function(source_name, methods)
-      null_ls.register(null_ls.builtins.formatting.jq)
-    end
 }
 
 -- will setup any installed and configured sources above
 null_ls.setup()
 ```
+
+# Setup
+
+There are primarily 2 paths to setup.
+
+## Primary Source of Truth is `mason-null-ls`
+
+This involves making sure tools are installed through `mason-null-ls` when available.
+
+```lua
+require("mason").setup()
+require("mason-null-ls").setup({
+    ensure_installed = {
+        -- Opt to list sources here, when available in mason.
+    },
+    automatic_installation = false,
+    automatic_setup = true, -- Recommended, but optional
+})
+require("null-ls").setup(
+    sources = {
+        -- Anything not supported by mason.
+    }
+)
+
+require 'mason-null-ls'.setup_handlers() -- If `automatic_setup` is true.
+```
+
+
+## Primary Source of Truth is `null-ls`.
+```lua
+require("mason").setup()
+require("null-ls").setup(
+    sources = {
+        -- all sources go here.
+    }
+)
+require("mason-null-ls").setup({
+    ensure_installed = nil,
+    automatic_installation = true,
+    automatic_setup = true,
+})
+```
+
+Note: This is my personal preference.
 
 
 # Available Null-ls sources

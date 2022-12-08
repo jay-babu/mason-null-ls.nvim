@@ -15,9 +15,13 @@ jobs:
       uses: actions/stale@v6.0.1
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
-        stale-message: 'This issue is stale because it has been open 15 days with no activity. Remove stale label or comment or this will be closed in 5 days'
         days-before-stale: 15
         days-before-close: 5
-        stale-label: 'Stale'
+        stale-issue-message: >
+          This issue has been automatically marked as stale. **If this issue is still affecting you, please leave any comment** (for example, "bump"), and we'll keep it open. If you have any new additional information—in particular, if this is still reproducible in the [latest version of Electron](https://www.electronjs.org/releases/stable) or in the [beta](https://www.electronjs.org/releases/beta)—please include it with your comment!
+        close-issue-message: >
+          This issue has been closed due to inactivity, and will not be monitored.  If this is a bug and you can reproduce this issue on a [supported version of Electron](https://www.electronjs.org/docs/latest/tutorial/electron-timelines#timeline) please open a new issue and include instructions for reproducing the issue.
+        stale-issue-label: 'Stale'
+        stale-pr-label: 'Stale'
         exempt-issue-labels: 'blocked'
         exempt-pr-labels: 'blocked,WIP'

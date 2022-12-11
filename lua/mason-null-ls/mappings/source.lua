@@ -1,101 +1,29 @@
 local _ = require('mason-core.functional')
+local Optional = require('mason-core.optional')
 
 local M = {}
 
 ---Maps null_ls source name to its corresponding package name.
-M.null_ls_to_package = {
-	['actionlint'] = 'actionlint',
-	['alex'] = 'alex',
-	['autopep8'] = 'autopep8',
-	['beautysh'] = 'beautysh',
-	['black'] = 'black',
-	['blade_formatter'] = 'blade-formatter',
-	['blue'] = 'blue',
-	['buf'] = 'buf',
-	['buildifier'] = 'buildifier',
-	['cbfmt'] = 'cbfmt',
-	['cfn_lint'] = 'cfn-lint',
-	['clang_format'] = 'clang-format',
+local null_ls_to_package = {
 	['cmake_format'] = 'cmakelang',
-	['codespell'] = 'codespell',
-	['commitlint'] = 'commitlint',
-	['cpplint'] = 'cpplint',
-	['csharpier'] = 'csharpier',
-	['cspell'] = 'cspell',
-	['curlylint'] = 'curlylint',
-	['djlint'] = 'djlint',
-	['dprint'] = 'dprint',
-	['editorconfig_checker'] = 'editorconfig-checker',
-	['elm_format'] = 'elm-format',
-	['erb_lint'] = 'erb-lint',
 	['eslint_d'] = 'eslint_d',
-	['fixjson'] = 'fixjson',
-	['flake8'] = 'flake8',
-	['gersemi'] = 'gersemi',
-	['gitlint'] = 'gitlint',
-	['gofumpt'] = 'gofumpt',
-	['goimports'] = 'goimports',
 	['goimports_reviser'] = 'goimports_reviser',
-	['golangci_lint'] = 'golangci-lint',
-	['golines'] = 'golines',
-	['hadolint'] = 'hadolint',
-	['haml_lint'] = 'haml-lint',
-	['isort'] = 'isort',
-	['joker'] = 'joker',
-	['jq'] = 'jq',
-	['jsonlint'] = 'jsonlint',
-	['ktlint'] = 'ktlint',
-	['luacheck'] = 'luacheck',
-	['markdownlint'] = 'markdownlint',
-	['misspell'] = 'misspell',
-	['mypy'] = 'mypy',
-	['phpcbf'] = 'phpcbf',
-	['phpcs'] = 'phpcs',
 	['phpcsfixer'] = 'php-cs-fixer',
-	['phpmd'] = 'phpmd',
-	['phpstan'] = 'phpstan',
-	['pint'] = 'pint',
-	['prettier'] = 'prettier',
-	['prettierd'] = 'prettierd',
-	['proselint'] = 'proselint',
-	['protolint'] = 'protolint',
-	['psalm'] = 'psalm',
-	['pydocstyle'] = 'pydocstyle',
-	['pylama'] = 'pylama',
-	['pylint'] = 'pylint',
-	['pyproject_flake8'] = 'pyproject-flake8',
-	['reorder_python_imports'] = 'reorder-python-imports',
-	['revive'] = 'revive',
-	['rome'] = 'rome',
-	['rstcheck'] = 'rstcheck',
-	['rubocop'] = 'rubocop',
-	['ruff'] = 'ruff',
-	['rustfmt'] = 'rustfmt',
-	['selene'] = 'selene',
-	['shellcheck'] = 'shellcheck',
-	['shellharden'] = 'shellharden',
-	['shfmt'] = 'shfmt',
-	['solhint'] = 'solhint',
-	['sql_formatter'] = 'sql-formatter',
-	['sqlfluff'] = 'sqlfluff',
-	['standardrb'] = 'standardrb',
-	['staticcheck'] = 'staticcheck',
-	['stylua'] = 'stylua',
-	['taplo'] = 'taplo',
-	['textlint'] = 'textlint',
-	['twigcs'] = 'twigcs',
-	['usort'] = 'usort',
-	['vale'] = 'vale',
 	['verible_verilog_format'] = 'verible',
-	['vint'] = 'vint',
-	['vulture'] = 'vulture',
-	['write_good'] = 'write-good',
-	['xo'] = 'xo',
-	['yamlfmt'] = 'yamlfmt',
-	['yamllint'] = 'yamllint',
-	['yapf'] = 'yapf',
 }
 
-M.package_to_null_ls = _.invert(M.null_ls_to_package)
+local package_to_null_ls = _.invert(null_ls_to_package)
+
+---@param source string: Source Name from NullLs
+---@return string: Package Name from Mason
+M.getPackageFromNullLs = function(source)
+	return Optional.of_nilable(null_ls_to_package[source]):or_else_get(_.always(source:gsub('%_', '-')))
+end
+
+---@param package string: Package Name from Mason
+---@return string: NullLs Source Name
+M.getNullLsFromPackage = function(package)
+	return Optional.of_nilable(package_to_null_ls[package]):or_else_get(_.always(package:gsub('%-', '_')))
+end
 
 return M

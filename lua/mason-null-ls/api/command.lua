@@ -15,12 +15,12 @@ local function parse_packages_from_user_args(user_args)
 		local source_name, version = Package.Parse(source_specifier)
 		-- 1. first see if the provided arg is an actual null-ls source name
 		return Optional
-			.of_nilable(source_mappings.null_ls_to_package[source_name])
+			.of_nilable(source_mappings.getPackageFromNullLs(source_name))
 			-- 2. if not, check if it's a language specifier (e.g., "typescript" or "java")
 			:or_(function()
-				return Optional.of_nilable(language_mappings[source_name]):map(function(package_names)
+				return Optional.of_nilable(language_mappings(source_name)):map(function(package_names)
 					local package_names = _.filter(function(package_name)
-						return source_mappings.null_ls_to_package[package_name] ~= nil
+						return source_mappings.getPackageFromNullLs(package_name) ~= nil
 					end, package_names)
 
 					if #package_names == 0 then
@@ -32,7 +32,7 @@ local function parse_packages_from_user_args(user_args)
 							source_name
 						),
 						format_item = function(package_name)
-							local source_name = source_mappings.null_ls_to_package[package_name]
+							local source_name = source_mappings.getPackageFromNullLs(package_name)
 							if registry.is_installed(package_name) then
 								return ('%s (installed)'):format(source_name)
 							else
@@ -64,7 +64,7 @@ local function parse_packages_from_heuristics()
 			return a.promisify(vim.ui.select)(source_names, {
 				prompt = ('Please select which source you want to install for filetype %q:'):format(current_ft),
 				format_item = function(source_name)
-					if registry.is_installed(source_mappings.null_ls_to_package[source_name]) then
+					if registry.is_installed(source_mappings.getPackageFromNullLs(source_name)) then
 						return ('%s (installed)'):format(source_name)
 					else
 						return source_name
@@ -73,7 +73,7 @@ local function parse_packages_from_heuristics()
 			})
 		end)
 		:map(function(source_name)
-			local package_name = source_mappings.null_ls_to_package[source_name]
+			local package_name = source_mappings.getPackageFromNullLs(source_name)
 			return { { package = package_name, version = nil } }
 		end)
 		:or_else_get(function()
@@ -119,7 +119,7 @@ local function NullLsUninstall(sources)
 	local registry = require('mason-registry')
 	local source_mappings = require('mason-null-ls.mappings.source')
 	for _, source_specifier in ipairs(sources) do
-		local package_name = source_mappings.null_ls_to_package[source_specifier]
+		local package_name = source_mappings.getPackageFromNullLs(source_specifier)
 		local pkg = registry.get_package(package_name)
 		pkg:uninstall()
 	end

@@ -10,6 +10,7 @@ local null_ls_to_package = {
 	['goimports_reviser'] = 'goimports_reviser',
 	['phpcsfixer'] = 'php-cs-fixer',
 	['verible_verilog_format'] = 'verible',
+	['lua_format'] = 'luaformatter',
 }
 
 local package_to_null_ls = _.invert(null_ls_to_package)

@@ -53,7 +53,7 @@ function M.setup_handlers(handlers)
 
 	local default_handler = Optional.of_nilable(handlers[1]):or_(_.always(Optional.of_nilable(default_setup)))
 	_.each(function(handler)
-		if type(handler) == 'string' and not source_mappings.null_ls_to_package[handler] then
+		if type(handler) == 'string' and not source_mappings.getPackageFromNullLs(handler) then
 			notify(
 				('mason-null-ls.setup_handlers: Received handler for unknown null-ls source name: %s.'):format(handler),
 				vim.log.levels.WARN
@@ -63,7 +63,7 @@ function M.setup_handlers(handlers)
 
 	---@param pkg_name string
 	local function get_source_name(pkg_name)
-		return Optional.of_nilable(source_mappings.package_to_null_ls[pkg_name])
+		return Optional.of_nilable(source_mappings.getNullLsFromPackage(pkg_name))
 	end
 
 	local function call_handler(source_name)
@@ -104,7 +104,7 @@ function M.get_installed_sources()
 	local source_mappings = require('mason-null-ls.mappings.source')
 
 	return _.filter_map(function(pkg_name)
-		return Optional.of_nilable(source_mappings.package_to_null_ls[pkg_name])
+		return Optional.of_nilable(source_mappings.getNullLsFromPackage(pkg_name))
 	end, registry.get_installed_package_names())
 end
 
@@ -149,7 +149,7 @@ function M.get_available_sources(filter)
 	end
 
 	return _.filter_map(function(pkg_name)
-		return Optional.of_nilable(source_mappings.package_to_null_ls[pkg_name]):map(function(source_name)
+		return Optional.of_nilable(source_mappings.getNullLsFromPackage(pkg_name)):map(function(source_name)
 			if #predicates == 0 or _.all_pass(predicates, source_name) then
 				return source_name
 			end

@@ -122,6 +122,7 @@ require ('mason-null-ls').setup({
 require 'mason-null-ls'.setup_handlers {
     function(source_name, methods)
       -- all sources with no handler get passed here
+      require("mason-null-ls.automatic_setup")(source_name, methods)
     end,
     stylua = function(source_name, methods)
       null_ls.register(null_ls.builtins.formatting.stylua)

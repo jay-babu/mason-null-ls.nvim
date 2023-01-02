@@ -18,7 +18,7 @@ local function parse_packages_from_user_args(user_args)
 			.of_nilable(source_mappings.getPackageFromNullLs(source_name))
 			-- 2. if not, check if it's a language specifier (e.g., "typescript" or "java")
 			:or_(function()
-				return Optional.of_nilable(language_mappings(source_name)):map(function(package_names)
+				return Optional.of_nilable(language_mappings[source_name]):map(function(package_names)
 					local package_names = _.filter(function(package_name)
 						return source_mappings.getPackageFromNullLs(package_name) ~= nil
 					end, package_names)

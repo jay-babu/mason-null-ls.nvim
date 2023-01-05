@@ -333,6 +333,10 @@ return {
         --   "nixfmt",
         --   "nixpkgs_fmt",
         -- },
+        ocaml = {
+                formatting = { "ocamlformat" }
+        },
+
         org = {
                 "cbfmt",
         },

@@ -1,26 +1,23 @@
 `mason-null-ls` bridges `mason.nvim` with the `null-ls` plugin - making it easier to use both plugins together.
 
-
 # Introduction
 
 `mason-null-ls.nvim` closes some gaps that exist between `mason.nvim` and `null-ls`. Its main responsibilities are:
 
--   provide extra convenience APIs such as the `:NullLsInstall` command
--   allow you to (i) automatically install, and (ii) automatically set up a predefined list of sources
--   translate between `null-ls` source names and `mason.nvim` package names (e.g. `haml_lint` <-> `haml-lint`)
+- provide extra convenience APIs such as the `:NullLsInstall` command
+- allow you to (i) automatically install, and (ii) automatically set up a predefined list of sources
+- translate between `null-ls` source names and `mason.nvim` package names (e.g. `haml_lint` <-> `haml-lint`)
 
 It is recommended to use this extension if you use `mason.nvim` and `null-ls`.
 Please read the whole README.md before jumping to [Setup](#setup).
 
-**Note: this plugin uses the `null-ls` source names in the APIs it exposes - not `mason.nvim` package names.
-
+**Note**: this plugin uses the `null-ls` source names in the APIs it exposes - not `mason.nvim` package names.
 
 # Requirements
 
--   neovim `>= 0.7.0`
--   [`mason.nvim`](https://github.com/williamboman/mason.nvim)
--   [`null-ls.nvim`](https://github.com/jose-elias-alvarez/null-ls.nvim)
-
+- neovim `>= 0.7.0`
+- [`mason.nvim`](https://github.com/williamboman/mason.nvim)
+- [`null-ls.nvim`](https://github.com/jose-elias-alvarez/null-ls.nvim)
 
 # Installation
 
@@ -30,7 +27,7 @@ Please read the whole README.md before jumping to [Setup](#setup).
 use {
     "williamboman/mason.nvim",
     "jose-elias-alvarez/null-ls.nvim",
-    "jayp0521/mason-null-ls.nvim",
+    "jay-babu/mason-null-ls.nvim",
 }
 ```
 
@@ -39,16 +36,15 @@ use {
 ```vim
 Plug 'williamboman/mason.nvim'
 Plug 'jose-elias-alvarez/null-ls.nvim'
-Plug 'jayp0521/mason-null-ls.nvim'
+Plug 'jay-babu/mason-null-ls.nvim'
 ```
 
 # Commands
 
 Available after calling `setup`.
 
--   `:NullInstall [<source>...]` - installs the provided sources
--   `:NullUninstall <source> ...` - uninstalls the provided sources
-
+- `:NullInstall [<source>...]` - installs the provided sources
+- `:NullUninstall <source> ...` - uninstalls the provided sources
 
 # Configuration
 
@@ -102,7 +98,6 @@ require("mason-null-ls").setup({
 ```
 
 See the Default Configuration section to understand how the default dap configs can be overriden.
-
 
 # Setup handlers usage
 
@@ -162,8 +157,8 @@ require("null-ls").setup(
 require 'mason-null-ls'.setup_handlers() -- If `automatic_setup` is true.
 ```
 
-
 ## Primary Source of Truth is `null-ls`.
+
 ```lua
 require("mason").setup()
 require("null-ls").setup(
@@ -180,12 +175,10 @@ require("mason-null-ls").setup({
 
 Note: This is my personal preference.
 
-
 # Available Null-ls sources
 
-
 | Filetype                                                                                                                              | Source name            |
-|---------------------------------------------------------------------------------------------------------------------------------------|------------------------|
+| ------------------------------------------------------------------------------------------------------------------------------------- | ---------------------- |
 | blade                                                                                                                                 | `blade_formatter`      |
 | bzl                                                                                                                                   | `buildifier`           |
 | c cpp                                                                                                                                 | `cpplint`              |

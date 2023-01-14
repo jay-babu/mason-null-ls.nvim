@@ -7,6 +7,9 @@ local function resolve_package(null_ls_source_name)
 	local source_mappings = require('mason-null-ls.mappings.source')
 
 	return Optional.of_nilable(source_mappings.getPackageFromNullLs(null_ls_source_name)):map(function(package_name)
+		if not registry.has_package(package_name) then
+			return nil
+		end
 		local ok, pkg = pcall(registry.get_package, package_name)
 		if ok then
 			return pkg

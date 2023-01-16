@@ -1,3 +1,25 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**
+
+- [Introduction](#introduction)
+- [Requirements](#requirements)
+- [Installation](#installation)
+  - [Packer](#packer)
+  - [vim-plug](#vim-plug)
+- [Commands](#commands)
+- [Configuration](#configuration)
+  - [Default configuration](#default-configuration)
+- [Automatic Setup Usage](#automatic-setup-usage)
+  - [Example Config](#example-config)
+- [Setup handlers usage](#setup-handlers-usage)
+- [Setup](#setup)
+  - [Primary Source of Truth is `mason-null-ls`](#primary-source-of-truth-is-mason-null-ls)
+  - [Primary Source of Truth is `null-ls`.](#primary-source-of-truth-is-null-ls)
+- [Available Null-ls sources](#available-null-ls-sources)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 `mason-null-ls` bridges `mason.nvim` with the `null-ls` plugin - making it easier to use both plugins together.
 
 # Introduction

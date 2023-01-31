@@ -491,9 +491,9 @@ return {
         -- },
         tex = {
                 --   "chktex",
+                "latexindent",
                 "proselint",
                 "vale",
-                --   "latexindent",
         },
         -- text = {
         --   "dictionary",

@@ -8,8 +8,8 @@ local function auto_get_packages()
 	sources = vim.list_extend(sources, vim.tbl_keys(require('null-ls.builtins').code_actions))
 	sources = vim.list_extend(sources, vim.tbl_keys(require('null-ls.builtins').completion))
 	sources = vim.list_extend(sources, vim.tbl_keys(require('null-ls.builtins').hover))
-	local tools = _.uniq_by(_.identity, sources)
-	return tools
+	sources = _.uniq_by(_.identity, sources)
+	return sources
 end
 
 ---@param null_ls_source_name string
@@ -60,17 +60,12 @@ return function()
 	end
 
 	for _, source_identifier in ipairs(sources) do
-		local Package = require('mason-core.package')
-
-		local source_name, version = Package.Parse(source_identifier)
-		resolve_package(source_name):if_present(
+		resolve_package(source_identifier):if_present(
 			-- -@param pkg Package
 			function(pkg)
 				if not pkg:is_installed() then
 					vim.notify(('[mason-null-ls] automatically installing %s'):format(pkg.name))
-					pkg:install({
-						version = version,
-					}):once(
+					pkg:install():once(
 						'closed',
 						vim.schedule_wrap(function()
 							if pkg:is_installed() then

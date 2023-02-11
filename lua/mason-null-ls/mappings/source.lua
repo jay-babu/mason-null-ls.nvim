@@ -17,14 +17,14 @@ local package_to_null_ls = _.invert(null_ls_to_package)
 
 ---@param source string: Source Name from NullLs
 ---@return string: Package Name from Mason
-M.getPackageFromNullLs = function(source)
+M.getPackageFromNullLs = _.memoize(function(source)
 	return Optional.of_nilable(null_ls_to_package[source]):or_else_get(_.always(source:gsub('%_', '-')))
-end
+end)
 
 ---@param package string: Package Name from Mason
 ---@return string: NullLs Source Name
-M.getNullLsFromPackage = function(package)
+M.getNullLsFromPackage = _.memoize(function(package)
 	return Optional.of_nilable(package_to_null_ls[package]):or_else_get(_.always(package:gsub('%-', '_')))
-end
+end)
 
 return M

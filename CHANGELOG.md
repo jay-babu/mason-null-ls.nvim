@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/jay-babu/mason-null-ls.nvim/compare/v1.0.0...v1.1.0) (2023-02-18)
+
+
+### Features
+
+* **java:** add google_java_format ([8cb04ca](https://github.com/jay-babu/mason-null-ls.nvim/commit/8cb04ca019a1f1e0df86ca56a04bd40fff142dc8))
+
 ## 1.0.0 (2023-02-16)
 
 

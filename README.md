@@ -178,6 +178,8 @@ require("null-ls").setup(
 )
 
 require 'mason-null-ls'.setup_handlers() -- If `automatic_setup` is true.
+
+Note: This is my personal preference.
 ```
 
 ## Primary Source of Truth is `null-ls`.
@@ -195,8 +197,6 @@ require("mason-null-ls").setup({
     automatic_setup = false,
 })
 ```
-
-Note: This is my personal preference.
 
 # Available Null-ls sources
 

@@ -25,6 +25,18 @@
 
 # Introduction
 
+<p align="center">
+    <a href="https://github.com/jay-babu/mason-null-ls.nvim/pulse">
+      <img src="https://img.shields.io/github/last-commit/jay-babu/mason-null-ls.nvim?style=for-the-badge&logo=github&color=7dc4e4&logoColor=D9E0EE&labelColor=302D41"/>
+    </a>
+    <a href="https://github.com/jay-babu/mason-null-ls.nvim/releases/latest">
+      <img src="https://img.shields.io/github/v/release/jay-babu/mason-null-ls.nvim?style=for-the-badge&logo=gitbook&color=8bd5ca&logoColor=D9E0EE&labelColor=302D41"/>
+    </a>
+    <a href="https://github.com/jay-babu/mason-null-ls.nvim/stargazers">
+      <img src="https://img.shields.io/github/stars/jay-babu/mason-null-ls.nvim?style=for-the-badge&logo=apachespark&color=eed49f&logoColor=D9E0EE&labelColor=302D41"/>
+    </a>
+</p>
+
 `mason-null-ls.nvim` closes some gaps that exist between `mason.nvim` and `null-ls`. Its main responsibilities are:
 
 - provide extra convenience APIs such as the `:NullLsInstall` command

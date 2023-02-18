@@ -17,6 +17,7 @@
   - [Primary Source of Truth is `mason-null-ls`](#primary-source-of-truth-is-mason-null-ls)
   - [Primary Source of Truth is `null-ls`.](#primary-source-of-truth-is-null-ls)
 - [Available Null-ls sources](#available-null-ls-sources)
+  - [Auto-resolve logic](#auto-resolve-logic)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 

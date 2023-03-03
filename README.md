@@ -3,6 +3,7 @@
 **Table of Contents**
 
 - [Introduction](#introduction)
+  - [Star History](#star-history)
 - [Requirements](#requirements)
 - [Installation](#installation)
   - [Packer](#packer)

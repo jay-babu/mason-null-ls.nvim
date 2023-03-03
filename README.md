@@ -7,6 +7,7 @@
 - [Requirements](#requirements)
 - [Installation](#installation)
   - [Packer](#packer)
+  - [lazy.nvim](#lazy.nvim)
   - [vim-plug](#vim-plug)
 - [Commands](#commands)
 - [Configuration](#configuration)
@@ -68,6 +69,22 @@ use {
     "williamboman/mason.nvim",
     "jose-elias-alvarez/null-ls.nvim",
     "jay-babu/mason-null-ls.nvim",
+}
+```
+
+## [lazy.nvim](https://github.com/folke/lazy.nvim)
+
+```lua
+{
+    "jay-babu/mason-null-ls.nvim",
+    event = { "BufReadPre", "BufNewFile" },
+    dependencies = {
+      "williamboman/mason.nvim",
+      "jose-elias-alvarez/null-ls.nvim",
+    },
+    config = function()
+      require("your.null-ls.config") -- require your null-ls config here (example below)
+    end,
 }
 ```
 
@@ -137,7 +154,7 @@ require("mason-null-ls").setup({
 })
 ```
 
-See the Default Configuration section to understand how the default dap configs can be overriden.
+See the Default Configuration section to understand how the default dap configs can be overridden.
 
 # Setup handlers usage
 

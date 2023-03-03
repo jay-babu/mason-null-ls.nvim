@@ -48,6 +48,10 @@ Please read the whole README.md before jumping to [Setup](#setup).
 
 **Note**: this plugin uses the `null-ls` source names in the APIs it exposes - not `mason.nvim` package names.
 
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=jay-babu/mason-null-ls.nvim&type=Date)](https://star-history.com/#jay-babu/mason-null-ls.nvim&Date)
+
 # Requirements
 
 - neovim `>= 0.7.0`

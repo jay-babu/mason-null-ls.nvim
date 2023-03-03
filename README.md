@@ -51,7 +51,7 @@ Please read the whole README.md before jumping to [Setup](#setup).
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=jay-babu/mason-null-ls.nvim&type=Date)](https://star-history.com/#jay-babu/mason-null-ls.nvim&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=jay-babu/mason-null-ls.nvim,jay-babu/mason-nvim-dap.nvim&type=Date)](https://star-history.com/#jay-babu/mason-null-ls.nvim&jay-babu/mason-nvim-dap.nvim&Date)
 
 # Requirements
 

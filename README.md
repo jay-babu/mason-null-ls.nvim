@@ -7,7 +7,7 @@
 - [Requirements](#requirements)
 - [Installation](#installation)
   - [Packer](#packer)
-  - [lazy.nvim](#lazy.nvim)
+  - [lazy.nvim](#lazynvim)
   - [vim-plug](#vim-plug)
 - [Commands](#commands)
 - [Configuration](#configuration)

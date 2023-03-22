@@ -15,6 +15,65 @@ local default_setup = function(source, types)
 	end
 end
 
+---@param handlers table<string, fun(source_name: string, methods: string[])> | nil
+---@return nil
+local function setup_handlers(handlers)
+	handlers = handlers or {}
+
+	local Optional = require('mason-core.optional')
+	local source_mappings = require('mason-null-ls.mappings.source')
+	local registry = require('mason-registry')
+	local notify = require('mason-core.notify')
+
+	local default_handler = Optional.of_nilable(handlers[1]):or_(_.always(Optional.of_nilable(default_setup)))
+
+	_.each(function(handler)
+		if type(handler) == 'string' and not source_mappings.getPackageFromNullLs(handler) then
+			notify(
+				('mason-null-ls.setup_handlers: Received handler for unknown null-ls source name: %s.'):format(handler),
+				vim.log.levels.WARN
+			)
+		end
+	end, _.keys(handlers))
+
+	---@param pkg_name string
+	local function get_source_name(pkg_name)
+		return Optional.of_nilable(source_mappings.getNullLsFromPackage(pkg_name))
+	end
+
+	local function call_handler(source_name)
+		log.fmt_trace('Checking handler for %s', source_name)
+
+		Optional.of_nilable(handlers[source_name]):or_(_.always(default_handler)):if_present(function(handler)
+			log.fmt_trace('Calling handler for %s', source_name)
+
+			local types = _.filter_map(function(method)
+				local ok, _ = pcall(require, string.format('null-ls.builtins.%s.%s', method, source_name))
+				if ok then
+					return Optional.of(method)
+				else
+					return Optional.empty()
+				end
+			end, { 'diagnostics', 'formatting', 'code_actions', 'completion', 'hover' })
+
+			local ok, err = pcall(handler, source_name, types)
+
+			if not ok then
+				vim.notify(err, vim.log.levels.ERROR)
+			end
+		end)
+	end
+
+	local installed_sources = _.filter_map(get_source_name, registry.get_installed_package_names())
+	_.each(call_handler, installed_sources)
+	registry:on(
+		'package:install:success',
+		vim.schedule_wrap(function(pkg)
+			get_source_name(pkg.name):if_present(call_handler)
+		end)
+	)
+end
+
 ---@param config MasonNullLsSettings | nil
 function M.setup(config)
 	local settings = require('mason-null-ls.settings')
@@ -40,61 +99,18 @@ function M.setup(config)
 		require('mason-null-ls.automatic_installation')()
 	end
 
+	if settings.current.handlers then
+		setup_handlers(settings.current.handlers)
+	end
+
 	require('mason-null-ls.api.command')
 end
 
----@param handlers table<string, fun(source_name: string, methods: string[])>
+---@param handlers table<string, fun(source_name: string, methods: string[])> | nil
+---@deprecated
+---@return nil
 function M.setup_handlers(handlers)
-	handlers = handlers or {}
-	local Optional = require('mason-core.optional')
-	local source_mappings = require('mason-null-ls.mappings.source')
-	local registry = require('mason-registry')
-	local notify = require('mason-core.notify')
-
-	local default_handler = Optional.of_nilable(handlers[1]):or_(_.always(Optional.of_nilable(default_setup)))
-	_.each(function(handler)
-		if type(handler) == 'string' and not source_mappings.getPackageFromNullLs(handler) then
-			notify(
-				('mason-null-ls.setup_handlers: Received handler for unknown null-ls source name: %s.'):format(handler),
-				vim.log.levels.WARN
-			)
-		end
-	end, _.keys(handlers))
-
-	---@param pkg_name string
-	local function get_source_name(pkg_name)
-		return Optional.of_nilable(source_mappings.getNullLsFromPackage(pkg_name))
-	end
-
-	local function call_handler(source_name)
-		log.fmt_trace('Checking handler for %s', source_name)
-		Optional.of_nilable(handlers[source_name]):or_(_.always(default_handler)):if_present(function(handler)
-			log.fmt_trace('Calling handler for %s', source_name)
-
-			local types = _.filter_map(function(method)
-				local ok, _ = pcall(require, string.format('null-ls.builtins.%s.%s', method, source_name))
-				if ok then
-					return Optional.of(method)
-				else
-					return Optional.empty()
-				end
-			end, { 'diagnostics', 'formatting', 'code_actions', 'completion', 'hover' })
-
-			local ok, err = pcall(handler, source_name, types)
-			if not ok then
-				vim.notify(err, vim.log.levels.ERROR)
-			end
-		end)
-	end
-
-	local installed_sources = _.filter_map(get_source_name, registry.get_installed_package_names())
-	_.each(call_handler, installed_sources)
-	registry:on(
-		'package:install:success',
-		vim.schedule_wrap(function(pkg)
-			get_source_name(pkg.name):if_present(call_handler)
-		end)
-	)
+	return setup_handlers(handlers)
 end
 
 ---@return string[]

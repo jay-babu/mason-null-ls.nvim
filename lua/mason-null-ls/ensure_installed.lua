@@ -1,4 +1,5 @@
 local settings = require('mason-null-ls.settings')
+local registry = require('mason-registry')
 
 ---@param null_ls_source_name string
 local function resolve_package(null_ls_source_name)
@@ -17,7 +18,7 @@ local function resolve_package(null_ls_source_name)
 	end)
 end
 
-return function()
+local function ensure_installed()
 	for _, source_identifier in ipairs(settings.current.ensure_installed) do
 		local Package = require('mason-core.package')
 
@@ -41,4 +42,12 @@ return function()
 			end
 		)
 	end
+end
+
+if registry.refresh then
+	return function()
+		registry.refresh(vim.schedule_wrap(ensure_installed))
+	end
+else
+	return ensure_installed
 end

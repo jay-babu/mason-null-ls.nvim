@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.0](https://github.com/jay-babu/mason-null-ls.nvim/compare/v1.1.0...v1.2.0) (2023-03-27)
+
+
+### Features
+
+* allowing handlers to be passed in via `setup` function ([35ce897](https://github.com/jay-babu/mason-null-ls.nvim/commit/35ce897a8c924b37c0f4ea8789ade6205e347591))
+* refresh registry before installing servers in ensure_installed ([43f33ba](https://github.com/jay-babu/mason-null-ls.nvim/commit/43f33ba1ba81fa3864f8683b1157efa099f8c9bc))
+
 ## [1.1.0](https://github.com/jay-babu/mason-null-ls.nvim/compare/v1.0.0...v1.1.0) (2023-02-18)
 
 

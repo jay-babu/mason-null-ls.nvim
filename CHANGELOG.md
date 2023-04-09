@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.0.0](https://github.com/jay-babu/mason-null-ls.nvim/compare/v1.2.0...v2.0.0) (2023-04-09)
+
+
+### ⚠ BREAKING CHANGES
+
+* removing `setup_handlers` function. automatic_setup is now implicitly true. ([#59](https://github.com/jay-babu/mason-null-ls.nvim/issues/59))
+
+### Features
+
+* removing `setup_handlers` function. automatic_setup is now implicitly true. ([#59](https://github.com/jay-babu/mason-null-ls.nvim/issues/59)) ([a0c4dc1](https://github.com/jay-babu/mason-null-ls.nvim/commit/a0c4dc10106521e5956f106a5ab6a2541737fde1))
+
 ## [1.2.0](https://github.com/jay-babu/mason-null-ls.nvim/compare/v1.1.0...v1.2.0) (2023-03-27)
 
 

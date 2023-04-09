@@ -62,16 +62,6 @@ Please read the whole README.md before jumping to [Setup](#setup).
 
 # Installation
 
-## [Packer](https://github.com/wbthomason/packer.nvim)
-
-```lua
-use {
-    "williamboman/mason.nvim",
-    "jose-elias-alvarez/null-ls.nvim",
-    "jay-babu/mason-null-ls.nvim",
-}
-```
-
 ## [lazy.nvim](https://github.com/folke/lazy.nvim)
 
 ```lua
@@ -128,15 +118,6 @@ local DEFAULT_SETTINGS = {
     -- Can also be an exclusion list.
     -- Example: `automatic_installation = { exclude = { "rust_analyzer", "solargraph" } }`
     automatic_installation = false,
-
-	-- Whether sources that are installed in mason should be automatically set up in null-ls.
-	-- Removes the need to set up null-ls manually.
-	-- Can either be:
-	-- 	- false: Null-ls is not automatically registered.
-	-- 	- true: Null-ls is automatically registered.
-	-- 	- { types = { SOURCE_NAME = {TYPES} } }. Allows overriding default configuration.
-	-- 	Ex: { types = { eslint_d = {'formatting'} } }
-	automatic_setup = false,
 }
 ```
 
@@ -156,36 +137,29 @@ require("mason-null-ls").setup({
 
 See the Default Configuration section to understand how the default dap configs can be overridden.
 
-# Setup handlers usage
+# Handlers usage
 
-The `setup_handlers()` function provides a dynamic way of setting up sources and any other needed logic, It can also do that during runtime.
+The `handlers` table provides a dynamic way of setting up sources and any other needed logic, It can also do that during runtime.
 
-**NOTE:** When setting `automatic_setup = true`, the handler function needs to be called at a minimum like:
-`require 'mason-null-ls'.setup_handlers()`. When passing in a custom handler function for the the default or a source,
-then the automatic_setup function one won't be invoked. See below to keep original functionality inside the custom handler.
+Providing an empty `handlers` will cause all sources to be automatically registered in `null-ls`. See below example on how to disable.
 
 ```lua
 local null_ls = require 'null-ls'
+null_ls.setup()
 
 require ('mason-null-ls').setup({
-    ensure_installed = {'stylua', 'jq'}
+    ensure_installed = {'stylua', 'jq'},
+    handlers = {
+        function() end, -- disables automatic setup of all null-ls sources
+        stylua = function(source_name, methods)
+          null_ls.register(null_ls.builtins.formatting.stylua)
+        end,
+        shfmt = function(source_name, methods)
+          -- custom logic
+          require('mason-null-ls').default_setup(source_name, methods) -- to maintain default behavior
+        end,
+    },
 })
-
-require 'mason-null-ls'.setup_handlers {
-    function(source_name, methods)
-      -- all sources with no handler get passed here
-
-      -- To keep the original functionality of `automatic_setup = true`,
-      -- please add the below.
-      require("mason-null-ls.automatic_setup")(source_name, methods)
-    end,
-    stylua = function(source_name, methods)
-      null_ls.register(null_ls.builtins.formatting.stylua)
-    end,
-}
-
--- will setup any installed and configured sources above
-null_ls.setup()
 ```
 
 # Setup
@@ -203,15 +177,13 @@ require("mason-null-ls").setup({
         -- Opt to list sources here, when available in mason.
     },
     automatic_installation = false,
-    automatic_setup = true, -- Recommended, but optional
+    handlers = {},
 })
 require("null-ls").setup({
     sources = {
         -- Anything not supported by mason.
     }
 })
-
-require 'mason-null-ls'.setup_handlers() -- If `automatic_setup` is true.
 
 Note: This is my personal preference.
 ```

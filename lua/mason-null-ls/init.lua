@@ -6,13 +6,8 @@ local M = {}
 -- Currently this only needs to be evaluated for the same list passed in.
 -- @param source string
 -- @param types string[]
-local default_setup = function(source, types)
-	local settings = require('mason-null-ls.settings')
-	if settings.current.automatic_setup then
-		local user_types = settings.current.automatic_setup.types or {}
-		local user_source_types = user_types[source]
-		require('mason-null-ls.automatic_setup')(source, user_source_types or types)
-	end
+M.default_setup = function(source, types)
+	require('mason-null-ls.automatic_setup')(source, types)
 end
 
 ---@param handlers table<string, fun(source_name: string, methods: string[])> | nil
@@ -25,7 +20,7 @@ local function setup_handlers(handlers)
 	local registry = require('mason-registry')
 	local notify = require('mason-core.notify')
 
-	local default_handler = Optional.of_nilable(handlers[1]):or_(_.always(Optional.of_nilable(default_setup)))
+	local default_handler = Optional.of_nilable(handlers[1]):or_(_.always(Optional.of_nilable(M.default_setup)))
 
 	_.each(function(handler)
 		if type(handler) == 'string' and not source_mappings.getPackageFromNullLs(handler) then
@@ -104,13 +99,6 @@ function M.setup(config)
 	end
 
 	require('mason-null-ls.api.command')
-end
-
----@param handlers table<string, fun(source_name: string, methods: string[])> | nil
----@deprecated
----@return nil
-function M.setup_handlers(handlers)
-	return setup_handlers(handlers)
 end
 
 ---@return string[]

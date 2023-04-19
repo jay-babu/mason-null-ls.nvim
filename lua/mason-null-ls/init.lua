@@ -6,9 +6,7 @@ local M = {}
 -- Currently this only needs to be evaluated for the same list passed in.
 -- @param source string
 -- @param types string[]
-M.default_setup = function(source, types)
-	require('mason-null-ls.automatic_setup')(source, types)
-end
+M.default_setup = require('mason-null-ls.automatic_setup')
 
 ---@param handlers table<string, fun(source_name: string, methods: string[])> | nil
 ---@return nil

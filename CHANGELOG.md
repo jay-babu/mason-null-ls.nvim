@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.1](https://github.com/jay-babu/mason-null-ls.nvim/compare/v2.0.0...v2.0.1) (2023-04-19)
+
+
+### Bug Fixes
+
+* don't memoize default_setup ([#62](https://github.com/jay-babu/mason-null-ls.nvim/issues/62)) ([0bf4c84](https://github.com/jay-babu/mason-null-ls.nvim/commit/0bf4c84f1c37506430c088f089d68c561245d3dc))
+
 ## [2.0.0](https://github.com/jay-babu/mason-null-ls.nvim/compare/v1.2.0...v2.0.0) (2023-04-09)
 
 

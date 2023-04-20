@@ -1,5 +1,6 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
 **Table of Contents**
 
 - [Introduction](#introduction)
@@ -22,7 +23,8 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-`mason-null-ls` bridges `mason.nvim` with the `null-ls` plugin - making it easier to use both plugins together.
+`mason-null-ls` bridges `mason.nvim` with the `null-ls` plugin - making it
+easier to use both plugins together.
 
 # Introduction
 
@@ -38,16 +40,20 @@
     </a>
 </p>
 
-`mason-null-ls.nvim` closes some gaps that exist between `mason.nvim` and `null-ls`. Its main responsibilities are:
+`mason-null-ls.nvim` closes some gaps that exist between `mason.nvim` and
+`null-ls`. Its main responsibilities are:
 
 - provide extra convenience APIs such as the `:NullLsInstall` command
-- allow you to (i) automatically install, and (ii) automatically set up a predefined list of sources
-- translate between `null-ls` source names and `mason.nvim` package names (e.g. `haml_lint` <-> `haml-lint`)
+- allow you to (i) automatically install, and (ii) automatically set up a
+  predefined list of sources
+- translate between `null-ls` source names and `mason.nvim` package names (e.g.
+  `haml_lint` <-> `haml-lint`)
 
 It is recommended to use this extension if you use `mason.nvim` and `null-ls`.
 Please read the whole README.md before jumping to [Setup](#setup).
 
-**Note**: this plugin uses the `null-ls` source names in the APIs it exposes - not `mason.nvim` package names.
+**Note**: this plugin uses the `null-ls` source names in the APIs it exposes -
+not `mason.nvim` package names.
 
 ## Star History
 
@@ -94,8 +100,10 @@ Available after calling `setup`.
 
 # Configuration
 
-You may optionally configure certain behavior of `mason-null-ls.nvim` when calling the `.setup()` function. Refer to
-the [default configuration](#default-configuration) for a list of all available settings.
+You may optionally configure certain behavior of `mason-null-ls.nvim` when
+calling the `.setup()` function. Refer to the
+[default configuration](#default-configuration) for a list of all available
+settings.
 
 Example:
 
@@ -122,8 +130,9 @@ local DEFAULT_SETTINGS = {
 
 # Automatic Setup Usage
 
-Automatic Setup is a need feature that removes the need to configure `null-ls` for supported sources.
-Sources found installed in `mason` will automatically be setup for null-ls.
+Automatic Setup is a need feature that removes the need to configure `null-ls`
+for supported sources. Sources found installed in `mason` will automatically be
+setup for null-ls.
 
 ## Example Config
 
@@ -134,13 +143,16 @@ require("mason-null-ls").setup({
 })
 ```
 
-See the Default Configuration section to understand how the default dap configs can be overridden.
+See the Default Configuration section to understand how the default dap configs
+can be overridden.
 
 # Handlers usage
 
-The `handlers` table provides a dynamic way of setting up sources and any other needed logic, It can also do that during runtime.
+The `handlers` table provides a dynamic way of setting up sources and any other
+needed logic, It can also do that during runtime.
 
-Providing an empty `handlers` will cause all sources to be automatically registered in `null-ls`. See below example on how to disable.
+Providing an empty `handlers` will cause all sources to be automatically
+registered in `null-ls`. See below example on how to disable.
 
 ```lua
 local null_ls = require 'null-ls'
@@ -167,7 +179,8 @@ There are primarily 2 paths to setup.
 
 ## Primary Source of Truth is `mason-null-ls`
 
-This involves making sure tools are installed through `mason-null-ls` when available.
+This involves making sure tools are installed through `mason-null-ls` when
+available.
 
 ```lua
 require("mason").setup()
@@ -205,11 +218,14 @@ require("mason-null-ls").setup({
 
 # Available Null-ls sources
 
-Ever since this [commit](https://github.com/jay-babu/mason-null-ls.nvim/commit/e2144bd62b703c1fa298b9e154296caeef389553), 
-this plugin attempts to auto-resolve between mason and null-ls. If this is not possible, then there is a way to add 
+Ever since this
+[commit](https://github.com/jay-babu/mason-null-ls.nvim/commit/e2144bd62b703c1fa298b9e154296caeef389553),
+this plugin attempts to auto-resolve between mason and null-ls. If this is not
+possible, then there is a way to add
 [exceptions](https://github.com/jay-babu/mason-null-ls.nvim/blob/main/lua/mason-null-ls/mappings/source.lua).
 
 ## Auto-resolve logic
 
-null-ls source name `google_java_format`, `mason-null-ls` will attempt to look for an override and if not found,
-then will attempt to look for a mason named: `google-java-format`.
+null-ls source name `google_java_format`, `mason-null-ls` will attempt to look
+for an override and if not found, then will attempt to look for a mason named:
+`google-java-format`.

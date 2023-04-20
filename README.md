@@ -138,9 +138,7 @@ setup for null-ls.
 
 ```lua
 require("mason").setup()
-require("mason-null-ls").setup({
-    automatic_setup = true,
-})
+require("mason-null-ls").setup()
 ```
 
 See the Default Configuration section to understand how the default dap configs
@@ -212,7 +210,8 @@ require("null-ls").setup({
 require("mason-null-ls").setup({
     ensure_installed = nil,
     automatic_installation = true,
-    automatic_setup = false,
+    -- disables automatic setup of all null-ls sources
+    handlers = { function() end },
 })
 ```
 

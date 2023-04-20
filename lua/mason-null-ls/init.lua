@@ -92,9 +92,7 @@ function M.setup(config)
 		require('mason-null-ls.automatic_installation')()
 	end
 
-	if settings.current.handlers then
-		setup_handlers(settings.current.handlers)
-	end
+	setup_handlers(settings.current.handlers)
 
 	require('mason-null-ls.api.command')
 end

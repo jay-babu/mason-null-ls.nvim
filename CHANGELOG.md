@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.2](https://github.com/jay-babu/mason-null-ls.nvim/compare/v2.0.1...v2.0.2) (2023-04-22)
+
+
+### Bug Fixes
+
+* don't import removed mason.mappings.language module from mason ([#66](https://github.com/jay-babu/mason-null-ls.nvim/issues/66)) ([dbf3486](https://github.com/jay-babu/mason-null-ls.nvim/commit/dbf34867375d9a7250d7c4fb1266895842a76c64))
+
 ## [2.0.1](https://github.com/jay-babu/mason-null-ls.nvim/compare/v2.0.0...v2.0.1) (2023-04-19)
 
 

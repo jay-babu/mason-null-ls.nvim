@@ -11,6 +11,7 @@ local null_ls_to_package = {
 	['phpcsfixer'] = 'php-cs-fixer',
 	['verible_verilog_format'] = 'verible',
 	['lua_format'] = 'luaformatter',
+	['ansible-lint'] = 'ansiblelint',
 }
 
 local package_to_null_ls = _.invert(null_ls_to_package)

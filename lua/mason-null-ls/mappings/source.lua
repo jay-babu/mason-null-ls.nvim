@@ -12,6 +12,7 @@ local null_ls_to_package = {
 	['verible_verilog_format'] = 'verible',
 	['lua_format'] = 'luaformatter',
 	['ansiblelint'] = 'ansible-lint',
+  ['deno_fmt'] = 'deno',
 }
 
 local package_to_null_ls = _.invert(null_ls_to_package)

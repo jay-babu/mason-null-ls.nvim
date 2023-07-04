@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.1.0](https://github.com/jay-babu/mason-null-ls.nvim/compare/v2.0.2...v2.1.0) (2023-07-04)
+
+
+### Features
+
+* add deno_fmt mapping ([398a0e9](https://github.com/jay-babu/mason-null-ls.nvim/commit/398a0e9a01539f0a3f00ac7a801f6479c6478fb0))
+* add mapping for ansible linter ([#75](https://github.com/jay-babu/mason-null-ls.nvim/issues/75)) ([ce6b1b5](https://github.com/jay-babu/mason-null-ls.nvim/commit/ce6b1b55088ac2f6bc3bde2ca9e2977b581e5d33))
+
 ## [2.0.2](https://github.com/jay-babu/mason-null-ls.nvim/compare/v2.0.1...v2.0.2) (2023-04-22)
 
 

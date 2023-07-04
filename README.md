@@ -124,6 +124,8 @@ local DEFAULT_SETTINGS = {
     -- Can also be an exclusion list.
     -- Example: `automatic_installation = { exclude = { "rust_analyzer", "solargraph" } }`
     automatic_installation = false,
+    -- See [#handlers-usage](#handlers-usage) section
+    handlers = nil,
 }
 ```
 
@@ -142,7 +144,7 @@ require("mason-null-ls").setup({
 })
 ```
 
-See the Default Configuration section to understand how the default dap configs
+See the Default Configuration section to understand how the default configs
 can be overridden.
 
 # Handlers usage

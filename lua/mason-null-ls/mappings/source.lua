@@ -13,6 +13,8 @@ local null_ls_to_package = {
 	['lua_format'] = 'luaformatter',
 	['ansiblelint'] = 'ansible-lint',
 	['deno_fmt'] = 'deno',
+	['kotlin_debug_adapter'] = 'kotlin-debug-adapter',
+	['kotlin_language_server'] = 'kotlin-language-server',
 }
 
 local package_to_null_ls = _.invert(null_ls_to_package)

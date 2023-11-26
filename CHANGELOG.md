@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.0](https://github.com/jay-babu/mason-null-ls.nvim/compare/v2.1.0...v2.2.0) (2023-11-26)
+
+
+### Features
+
+* add NoneLs* commands ([#85](https://github.com/jay-babu/mason-null-ls.nvim/issues/85)) ([7f474eb](https://github.com/jay-babu/mason-null-ls.nvim/commit/7f474eb37209faa2273af9d9b9c5655df9286837))
+
 ## [2.1.0](https://github.com/jay-babu/mason-null-ls.nvim/compare/v2.0.2...v2.1.0) (2023-07-04)
 
 

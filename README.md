@@ -95,7 +95,9 @@ Plug 'jay-babu/mason-null-ls.nvim'
 Available after calling `setup`.
 
 - `:NullLsInstall [<source>...]` - installs the provided sources
+- `:NoneLsInstall [<source>...]` - installs the provided sources
 - `:NullLsUninstall <source> ...` - uninstalls the provided sources
+- `:NoneLsUninstall <source> ...` - uninstalls the provided sources
 
 # Configuration
 

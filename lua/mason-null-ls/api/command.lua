@@ -106,13 +106,15 @@ local NullLsInstall = a.scope(function(sources)
 	end
 end)
 
-vim.api.nvim_create_user_command('NullLsInstall', function(opts)
-	NullLsInstall(opts.fargs)
-end, {
-	desc = 'Install one or more Null-ls sources.',
-	nargs = '*',
-	complete = 'custom,v:lua.mason_null_ls_completion.available_source_completion',
-})
+for _, command in ipairs({ 'NullLsInstall', 'NoneLsInstall' }) do
+	vim.api.nvim_create_user_command(command, function(opts)
+		NullLsInstall(opts.fargs)
+	end, {
+		desc = 'Install one or more Null-ls sources.',
+		nargs = '*',
+		complete = 'custom,v:lua.mason_null_ls_completion.available_source_completion',
+	})
+end
 
 local function NullLsUninstall(sources)
 	require('mason.ui').open()
@@ -126,13 +128,15 @@ local function NullLsUninstall(sources)
 	end
 end
 
-vim.api.nvim_create_user_command('NullLsUninstall', function(opts)
-	NullLsUninstall(opts.fargs)
-end, {
-	desc = 'Uninstall one or more Null-ls sources.',
-	nargs = '+',
-	complete = 'custom,v:lua.mason_null_ls_completion.installed_source_completion',
-})
+for _, command in ipairs({ 'NullLsUninstall', 'NoneLsUninstall' }) do
+	vim.api.nvim_create_user_command(command, function(opts)
+		NullLsUninstall(opts.fargs)
+	end, {
+		desc = 'Uninstall one or more Null-ls sources.',
+		nargs = '+',
+		complete = 'custom,v:lua.mason_null_ls_completion.installed_source_completion',
+	})
+end
 
 _G.mason_null_ls_completion = {
 	available_source_completion = function()

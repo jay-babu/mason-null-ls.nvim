@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.3.0](https://github.com/jay-babu/mason-null-ls.nvim/compare/v2.2.0...v2.3.0) (2023-12-31)
+
+
+### Features
+
+* add ruff_format mapping ([#88](https://github.com/jay-babu/mason-null-ls.nvim/issues/88)) ([4d5fdfb](https://github.com/jay-babu/mason-null-ls.nvim/commit/4d5fdfbb1149263d8cb0cec78a4a002b9ff87a07))
+
 ## [2.2.0](https://github.com/jay-babu/mason-null-ls.nvim/compare/v2.1.0...v2.2.0) (2023-11-26)
 
 

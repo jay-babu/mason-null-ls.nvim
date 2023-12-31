@@ -13,6 +13,7 @@ local null_ls_to_package = {
 	['lua_format'] = 'luaformatter',
 	['ansiblelint'] = 'ansible-lint',
 	['deno_fmt'] = 'deno',
+	['ruff_format'] = 'ruff',
 }
 
 local package_to_null_ls = _.invert(null_ls_to_package)

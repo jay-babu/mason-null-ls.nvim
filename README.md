@@ -74,7 +74,7 @@ not `mason.nvim` package names.
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       "williamboman/mason.nvim",
-      "jose-elias-alvarez/null-ls.nvim",
+      "nvimtools/none-ls.nvim",
     },
     config = function()
       require("your.null-ls.config") -- require your null-ls config here (example below)
@@ -86,7 +86,7 @@ not `mason.nvim` package names.
 
 ```vim
 Plug 'williamboman/mason.nvim'
-Plug 'jose-elias-alvarez/null-ls.nvim'
+Plug 'nvimtools/none-ls.nvim'
 Plug 'jay-babu/mason-null-ls.nvim'
 ```
 

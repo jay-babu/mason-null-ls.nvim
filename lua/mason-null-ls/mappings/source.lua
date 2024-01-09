@@ -14,6 +14,7 @@ local null_ls_to_package = {
 	['ansiblelint'] = 'ansible-lint',
 	['deno_fmt'] = 'deno',
 	['ruff_format'] = 'ruff',
+	['xmlformat'] = 'xmlformatter',
 }
 
 local package_to_null_ls = _.invert(null_ls_to_package)

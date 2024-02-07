@@ -40,7 +40,11 @@ local function setup_handlers(handlers)
 		Optional.of_nilable(handlers[source_name]):or_(_.always(default_handler)):if_present(function(handler)
 			log.fmt_trace('Calling handler for %s', source_name)
 
+			local ignored_methods = require('mason-null-ls.settings').current.ignore_methods
 			local types = _.filter_map(function(method)
+				if vim.tbl_contains(ignored_methods, method) then
+					return Optional.empty()
+				end
 				local ok, _ = pcall(require, string.format('null-ls.builtins.%s.%s', method, source_name))
 				if ok then
 					return Optional.of(method)

@@ -20,6 +20,13 @@ local function setup_handlers(handlers)
 
 	local default_handler = Optional.of_nilable(handlers[1]):or_(_.always(Optional.of_nilable(M.default_setup)))
 
+	local methods = {}
+	for method, enabled in pairs(require('mason-null-ls.settings').current.methods) do
+		if enabled then
+			table.insert(methods, method)
+		end
+	end
+
 	_.each(function(handler)
 		if type(handler) == 'string' and not source_mappings.getPackageFromNullLs(handler) then
 			notify(
@@ -47,7 +54,7 @@ local function setup_handlers(handlers)
 				else
 					return Optional.empty()
 				end
-			end, { 'diagnostics', 'formatting', 'code_actions', 'completion', 'hover' })
+			end, methods)
 
 			local ok, err = pcall(handler, source_name, types)
 

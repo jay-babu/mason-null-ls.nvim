@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.5.0](https://github.com/jay-babu/mason-null-ls.nvim/compare/v2.4.0...v2.5.0) (2024-02-10)
+
+
+### Features
+
+* add `methods` to enable or disable specific null-ls source method types ([#94](https://github.com/jay-babu/mason-null-ls.nvim/issues/94)) ([d123aaa](https://github.com/jay-babu/mason-null-ls.nvim/commit/d123aaa92734c99760ab75c89fdf8d7387f87a76))
+
 ## [2.4.0](https://github.com/jay-babu/mason-null-ls.nvim/compare/v2.3.0...v2.4.0) (2024-01-09)
 
 

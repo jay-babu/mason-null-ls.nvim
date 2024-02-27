@@ -9,7 +9,7 @@ local M = {}
 
 ---@class MasonNullLsSettings
 ---@field handlers table | nil
----@field methods MasonNullLsMethods
+---@field methods MasonNullLsMethods | nil
 ---@field ensure_installed table
 ---@field automatic_installation boolean | table
 local DEFAULT_SETTINGS = {

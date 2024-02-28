@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.5.1](https://github.com/jay-babu/mason-null-ls.nvim/compare/v2.5.0...v2.5.1) (2024-02-28)
+
+
+### Bug Fixes
+
+* **docs:** config requires `ignore_methods` field ([#98](https://github.com/jay-babu/mason-null-ls.nvim/issues/98)) ([05385ea](https://github.com/jay-babu/mason-null-ls.nvim/commit/05385ea1e940d5087ca20c932d8efba6462506bf))
+
 ## [2.5.0](https://github.com/jay-babu/mason-null-ls.nvim/compare/v2.4.0...v2.5.0) (2024-02-10)
 
 

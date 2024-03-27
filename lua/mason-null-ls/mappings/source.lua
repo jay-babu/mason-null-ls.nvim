@@ -5,6 +5,7 @@ local M = {}
 
 ---Maps null_ls source name to its corresponding package name.
 local null_ls_to_package = {
+	['cmake_lint'] = 'cmakelint',
 	['cmake_format'] = 'cmakelang',
 	['eslint_d'] = 'eslint_d',
 	['goimports_reviser'] = 'goimports_reviser',

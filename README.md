@@ -142,7 +142,7 @@ local DEFAULT_SETTINGS = {
 
 # Automatic Setup Usage
 
-Automatic Setup is a need feature that removes the need to configure `null-ls`
+Automatic Setup is a neat feature that removes the need to configure `null-ls`
 for supported sources. Sources found installed in `mason` will automatically be
 setup for null-ls.
 

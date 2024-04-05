@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.6.0](https://github.com/jay-babu/mason-null-ls.nvim/compare/v2.5.1...v2.6.0) (2024-04-05)
+
+
+### Features
+
+* add cmake_lint mapping ([#101](https://github.com/jay-babu/mason-null-ls.nvim/issues/101)) ([edd7d34](https://github.com/jay-babu/mason-null-ls.nvim/commit/edd7d34effa5b4a9c7ce6a2caec1e95a196eb415))
+
+
+### Bug Fixes
+
+* **docs:** correct typo in README ([#102](https://github.com/jay-babu/mason-null-ls.nvim/issues/102)) ([43f54f0](https://github.com/jay-babu/mason-null-ls.nvim/commit/43f54f07327348d9bb6e00923e1641f8dd2b0067))
+
 ## [2.5.1](https://github.com/jay-babu/mason-null-ls.nvim/compare/v2.5.0...v2.5.1) (2024-02-28)
 
 

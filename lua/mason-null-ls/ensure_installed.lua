@@ -35,6 +35,13 @@ local function ensure_installed()
 						vim.schedule_wrap(function()
 							if pkg:is_installed() then
 								vim.notify(('[mason-null-ls] %s was installed'):format(pkg.name))
+							else
+								vim.notify(
+									('[mason-null-ls] failed to install %s. Installation logs are available in :Mason and :MasonLog'):format(
+										pkg.name
+									),
+									vim.log.levels.ERROR
+								)
 							end
 						end)
 					)

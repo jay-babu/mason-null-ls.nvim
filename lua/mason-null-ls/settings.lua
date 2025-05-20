@@ -43,12 +43,10 @@ M.current = M._DEFAULT_SETTINGS
 ---@param opts MasonNullLsSettings
 function M.set(opts)
 	M.current = vim.tbl_deep_extend('force', M.current, opts)
-	vim.validate({
-		ensure_installed = { M.current.ensure_installed, 'table', true },
-		methods = { M.current.methods, 'table', true },
-		automatic_installation = { M.current.automatic_installation, { 'boolean', 'table' }, true },
-		handlers = { M.current.handlers, { 'table' }, true },
-	})
+	vim.validate('ensure_installed', M.current.ensure_installed, 'table', true)
+	vim.validate('methods', M.current.methods, 'table', true)
+	vim.validate('automatic_installation', M.current.automatic_installation, {'boolean', 'table'}, true)
+	vim.validate('handlers', M.current.handlers, 'table', true)
 end
 
 return M

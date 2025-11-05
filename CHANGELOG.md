@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.6.1](https://github.com/jay-babu/mason-null-ls.nvim/compare/v2.6.0...v2.6.1) (2025-11-05)
+
+
+### Bug Fixes
+
+* update deprecated use of vim.validate ([#111](https://github.com/jay-babu/mason-null-ls.nvim/issues/111)) ([8e7806a](https://github.com/jay-babu/mason-null-ls.nvim/commit/8e7806acaa87fae64f0bfde25bb4b87c18bd19b4))
+
 ## [2.6.0](https://github.com/jay-babu/mason-null-ls.nvim/compare/v2.5.1...v2.6.0) (2024-04-05)
 
 
